@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="radius_default">16dp</dimen>
+    <dimen name="line_spacing_extra_default">8sp</dimen>
+</resources>

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">WIT Weather</string>
+    <string name="enable_my_location">Enable My Location</string>
+    <string name="o">o</string>
+    <string name="c">c</string>
+    <string name="refresh">Refresh</string>
+    <string name="top_cities">TOP CITIES</string>
+    <string name="version">WIT Software - v0.0.1</string>
+    <string name="disclaimer">Subject to WIT Software Privacy Pollicy and applicable Terms and Conditions.</string>
 </resources>
