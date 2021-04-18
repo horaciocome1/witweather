@@ -10,9 +10,12 @@ object CityCoverUtils {
             R.drawable.ic_undraw_at_home_octe,
             R.drawable.ic_undraw_building_re_xfcm,
             R.drawable.ic_undraw_cabin_hkfr,
+            R.drawable.ic_undraw_coming_home_52ir,
+            R.drawable.ic_undraw_factory_dy0a,
+            R.drawable.ic_undraw_quite_town_mg2q,
+            R.drawable.ic_undraw_sweet_home_dkhr
         )
-        val randomPosition = covers.random()
-        return covers[randomPosition]
+        return covers.random()
     }
 
 }

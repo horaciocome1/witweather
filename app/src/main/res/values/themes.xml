@@ -3,11 +3,11 @@
     <style name="Theme.WITWeather" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/deep_purple_500</item>
-        <item name="colorPrimaryVariant">@color/deep_purple_700</item>
+        <item name="colorPrimaryVariant">@color/deep_purple_500</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/deep_purple_500</item>
-        <item name="colorSecondaryVariant">@color/deep_purple_700</item>
+        <item name="colorSecondaryVariant">@color/deep_purple_500</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>

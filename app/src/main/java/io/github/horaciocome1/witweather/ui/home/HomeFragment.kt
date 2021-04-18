@@ -60,6 +60,7 @@ class HomeFragment : Fragment() {
 
     private fun initRecyclerView() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = citiesAdapter
         binding.recyclerView.addOnItemClickListener { _, position ->
             val city = citiesAdapter.dataSet[position]
             val name = cityNameBuilder(city.name, city.country)
