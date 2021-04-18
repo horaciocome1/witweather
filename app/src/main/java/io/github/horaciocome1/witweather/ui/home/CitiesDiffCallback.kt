@@ -2,7 +2,7 @@ package io.github.horaciocome1.witweather.ui.home
 
 import androidx.annotation.Nullable
 import androidx.recyclerview.widget.DiffUtil
-import io.github.horaciocome1.witweather.data.City
+import io.github.horaciocome1.witweather.data.cities.City
 
 class CitiesDiffCallback(
     private val oldList: MutableList<City>,

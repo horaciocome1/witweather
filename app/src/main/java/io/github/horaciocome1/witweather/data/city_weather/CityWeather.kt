@@ -1,4 +1,4 @@
-package io.github.horaciocome1.witweather.data
+package io.github.horaciocome1.witweather.data.city_weather
 
 data class CityWeather(
     var cityName: String = "",

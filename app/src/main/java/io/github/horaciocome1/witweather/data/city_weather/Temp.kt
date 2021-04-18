@@ -1,4 +1,4 @@
-package io.github.horaciocome1.witweather.data
+package io.github.horaciocome1.witweather.data.city_weather
 
 data class Temp(
     var current: Float = -1f,

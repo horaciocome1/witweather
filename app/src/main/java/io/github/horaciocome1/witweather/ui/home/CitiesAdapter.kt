@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import io.github.horaciocome1.witweather.data.City
+import io.github.horaciocome1.witweather.data.cities.City
 import io.github.horaciocome1.witweather.databinding.ItemCityBinding
 import io.github.horaciocome1.witweather.util.CityCoverUtils
 

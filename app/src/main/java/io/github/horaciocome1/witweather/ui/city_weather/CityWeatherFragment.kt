@@ -8,8 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import io.github.horaciocome1.witweather.R
-import io.github.horaciocome1.witweather.data.CityWeather
+import io.github.horaciocome1.witweather.data.city_weather.CityWeather
 import io.github.horaciocome1.witweather.databinding.FragmentCityWeatherBinding
+import io.github.horaciocome1.witweather.util.Constants
 import kotlin.math.roundToInt
 
 class CityWeatherFragment : Fragment() {
@@ -30,6 +31,7 @@ class CityWeatherFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+        binding.refreshButton.setOnClickListener { getCityWeather(Constants.COMMAND_REFRESH) }
     }
 
     override fun onStart() {
@@ -42,7 +44,7 @@ class CityWeatherFragment : Fragment() {
     }
 
     private fun getCityWeather(cityId: Int) {
-        viewModel.getCityWeather(cityId).observe(this) { setWeatherToUI(it)}
+        viewModel.getCityWeather(cityId).observe(viewLifecycleOwner) { setWeatherToUI(it)}
     }
 
     private fun setWeatherToUI(weather: CityWeather) {

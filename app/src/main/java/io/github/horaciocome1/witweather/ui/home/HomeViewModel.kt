@@ -3,20 +3,31 @@ package io.github.horaciocome1.witweather.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import io.github.horaciocome1.witweather.data.City
-import io.github.horaciocome1.witweather.data.CityWeather
+import io.github.horaciocome1.witweather.data.cities.City
+import io.github.horaciocome1.witweather.data.city_weather.CityWeather
+import io.github.horaciocome1.witweather.data.cities.CitiesRepository
+import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
+import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
 
-    fun getCityWeather(latitude: Float, longitude: Float): LiveData<CityWeather> {
+    private val cities: MutableLiveData<MutableList<City>> = MutableLiveData()
 
-        return MutableLiveData()
-    }
+    private val cityWeather: MutableLiveData<CityWeather> = MutableLiveData()
 
     fun getCities(): LiveData<MutableList<City>> {
+        if (!cities.value.isNullOrEmpty()) {
+            return cities
+        }
+        viewModelScope.launch { cities.value = CitiesRepository.getCities() }
+        return cities
+    }
 
-        return MutableLiveData()
+    fun getCityWeather(latitude: Float, longitude: Float): LiveData<CityWeather> {
+        viewModelScope.launch { cityWeather.value = CitiesWeatherRepository.getCityWeather(latitude, longitude) }
+        return cityWeather
     }
 
     fun navigateToCity(navController: NavController, cityId: Int, cityName: String) {
