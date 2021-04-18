@@ -6,5 +6,9 @@
     <string name="refresh">Refresh</string>
     <string name="top_cities">TOP CITIES</string>
     <string name="version">WIT Software - v0.0.1</string>
-    <string name="disclaimer">Subject to WIT Software Privacy Pollicy and applicable Terms and Conditions.</string>
+    <string name="disclaimer">Subject to WIT Software Privacy Policy and applicable Terms and Conditions.</string>
+    <string name="city_name">%1$s, %2$s</string>
+    <string name="temp_min_max">MIN %1$d ºc / MAX %2$d ºc</string>
+    <string name="wind">%1$d m/s</string>
+    <string name="temp">%1$d ºc</string>
 </resources>

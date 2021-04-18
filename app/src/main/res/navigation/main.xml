@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/destination_home"
-        android:name="io.github.horaciocome1.witweather.HomeFragment"
+        android:name="io.github.horaciocome1.witweather.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -20,7 +20,14 @@
     </fragment>
     <fragment
         android:id="@+id/destination_city_weather"
-        android:name="io.github.horaciocome1.witweather.CityWeatherFragment"
+        android:name="io.github.horaciocome1.witweather.ui.city_weather.CityWeatherFragment"
         android:label="CityWeather"
-        tools:layout="@layout/fragment_city_weather" />
+        tools:layout="@layout/fragment_city_weather" >
+        <argument
+            android:name="cityId"
+            app:argType="integer" />
+        <argument
+            android:name="cityName"
+            app:argType="string" />
+    </fragment>
 </navigation>
