@@ -2,25 +2,25 @@ package io.github.horaciocome1.witweather.data.cities
 
 object CitiesFakeDataSource {
 
-    val json: String = "[\n" +
+    const val json: String = "[\n" +
             "    {\n" +
-            "        \"id\": 4516749,\n" +
+            "        \"id\": 2267057,\n" +
             "        \"name\": \"Lisbon\",\n" +
-            "        \"state\": \"OH\",\n" +
-            "        \"country\": \"US\",\n" +
+            "        \"state\": \"\",\n" +
+            "        \"country\": \"PT\",\n" +
             "        \"coord\": {\n" +
-            "            \"lon\": -83.635201,\n" +
-            "            \"lat\": 39.860889\n" +
+            "            \"lon\": -9.13333,\n" +
+            "            \"lat\": 38.716671\n" +
             "        }\n" +
             "    },\n" +
             "    {\n" +
-            "        \"id\": 1704129,\n" +
+            "        \"id\": 6359304,\n" +
             "        \"name\": \"Madrid\",\n" +
             "        \"state\": \"\",\n" +
-            "        \"country\": \"PH\",\n" +
+            "        \"country\": \"ES\",\n" +
             "        \"coord\": {\n" +
-            "            \"lon\": 125.964371,\n" +
-            "            \"lat\": 9.26211\n" +
+            "            \"lon\": -3.68275,\n" +
+            "            \"lat\": 40.489349\n" +
             "        }\n" +
             "    },\n" +
             "    {\n" +

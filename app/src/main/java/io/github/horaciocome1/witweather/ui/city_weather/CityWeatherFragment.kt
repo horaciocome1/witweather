@@ -1,6 +1,8 @@
 package io.github.horaciocome1.witweather.ui.city_weather
 
+import android.animation.LayoutTransition
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +12,8 @@ import androidx.navigation.fragment.findNavController
 import io.github.horaciocome1.witweather.R
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
 import io.github.horaciocome1.witweather.databinding.FragmentCityWeatherBinding
-import io.github.horaciocome1.witweather.util.Constants
+import io.github.horaciocome1.witweather.util.gone
+import io.github.horaciocome1.witweather.util.visible
 import kotlin.math.roundToInt
 
 class CityWeatherFragment : Fragment() {
@@ -30,8 +33,9 @@ class CityWeatherFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        binding.container.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
-        binding.refreshButton.setOnClickListener { getCityWeather(Constants.COMMAND_REFRESH) }
+        binding.contentInclude.refreshButton.setOnClickListener { viewModel.refreshWeather() }
     }
 
     override fun onStart() {
@@ -44,20 +48,23 @@ class CityWeatherFragment : Fragment() {
     }
 
     private fun getCityWeather(cityId: Int) {
-        viewModel.getCityWeather(cityId).observe(viewLifecycleOwner) { setWeatherToUI(it)}
+        viewModel.getCityWeather(cityId).observe(viewLifecycleOwner) { setWeatherToUI(it) }
     }
 
     private fun setWeatherToUI(weather: CityWeather) {
-        val min = weather.temp.min.roundToInt()
-        val max = weather.temp.max.roundToInt()
-        binding.tempTextView.text = getString(R.string.temp_min_max, min, max)
-        binding.currentTempTextView.text = "${weather.temp.current.roundToInt()}"
-        binding.mainTextView.text = weather.main
+        Log.d("CityWeatherF", "setWeatherToUI: $weather")
+        val min = weather.main.tempMin.roundToInt()
+        val max = weather.main.tempMax.roundToInt()
+        binding.contentInclude.tempTextView.text = getString(R.string.temp_min_max, min, max)
+        binding.contentInclude.currentTempTextView.text = "${weather.main.temp.roundToInt()}"
+        binding.contentInclude.mainTextView.text = weather.weather.first().main
 //        binding.sunriseTextView.text =
-        val wind = weather.wind.roundToInt()
-        binding.windTextView.text = getString(R.string.wind, wind)
-        val realFeel = weather.temp.realFeel.roundToInt()
-        binding.windTextView.text = getString(R.string.temp, realFeel)
+        val wind = weather.wind.speed.roundToInt()
+        binding.contentInclude.windTextView.text = getString(R.string.wind_mps, wind)
+        val realFeel = weather.main.feelsLike.roundToInt()
+        binding.contentInclude.reealFeelTextView.text = getString(R.string.temp, realFeel)
+        binding.contentInclude.root.visible()
+        binding.progressBar.gone()
     }
 
 }

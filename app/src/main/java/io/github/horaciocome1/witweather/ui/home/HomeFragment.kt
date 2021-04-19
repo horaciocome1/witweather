@@ -1,5 +1,6 @@
 package io.github.horaciocome1.witweather.ui.home
 
+import android.animation.LayoutTransition
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,6 +32,7 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        binding.container.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding.currentCityInclude.refreshButton.setOnClickListener { getCityWeather() }
         binding.currentCityRequestInclude.enableMyLocationButton.setOnClickListener { enableLocation() }
         initRecyclerView()

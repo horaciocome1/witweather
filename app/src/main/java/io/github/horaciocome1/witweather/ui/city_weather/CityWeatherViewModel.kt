@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
 import io.github.horaciocome1.witweather.util.Constants
+import io.github.horaciocome1.witweather.util.toCelsius
 import kotlinx.coroutines.launch
 
 class CityWeatherViewModel : ViewModel() {
@@ -19,8 +20,22 @@ class CityWeatherViewModel : ViewModel() {
         if (cityId != Constants.COMMAND_REFRESH) {
             this.cityId = cityId
         }
-        viewModelScope.launch { cityWeather.value = CitiesWeatherRepository.getCityWeather(this@CityWeatherViewModel.cityId) }
+        fetchWeather()
         return cityWeather
+    }
+
+    fun refreshWeather() {
+        if (cityId != 0) {
+            fetchWeather()
+        }
+    }
+
+    private fun fetchWeather() {
+        viewModelScope.launch {
+            val weather = CitiesWeatherRepository.getCityWeather(cityId)
+            weather.main.toCelsius()
+            cityWeather.value = weather
+        }
     }
 
 }

@@ -2,4 +2,5 @@
 <resources>
     <dimen name="radius_default">16dp</dimen>
     <dimen name="line_spacing_extra_default">8sp</dimen>
+    <dimen name="progress_bar_width">32dp</dimen>
 </resources>

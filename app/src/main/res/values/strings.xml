@@ -9,6 +9,9 @@
     <string name="disclaimer">Subject to WIT Software Privacy Policy and applicable Terms and Conditions.</string>
     <string name="city_name">%1$s, %2$s</string>
     <string name="temp_min_max">MIN %1$d ºc / MAX %2$d ºc</string>
-    <string name="wind">%1$d m/s</string>
+    <string name="wind_mps">%1$d m/s</string>
     <string name="temp">%1$d ºc</string>
+    <string name="real_feel">Real feel</string>
+    <string name="wind">Wind</string>
+    <string name="sunrise">Sunrise</string>
 </resources>
