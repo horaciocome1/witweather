@@ -14,4 +14,10 @@
     <string name="real_feel">Real feel</string>
     <string name="wind">Wind</string>
     <string name="sunrise">Sunrise</string>
+    <string name="location_error">Can\'t get your current location.</string>
+    <string name="location_loading">Looking for your location…</string>
+    <string name="retry">Retry</string>
+    <string name="temp_min_max_rf">MIN %1$d ºc\nMAX %2$d ºc\nRF %3$d ºc</string>
+    <string name="location_icon">location icon</string>
+    <string name="location_vector">location vector</string>
 </resources>

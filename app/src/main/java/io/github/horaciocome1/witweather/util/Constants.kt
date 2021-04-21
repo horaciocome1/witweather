@@ -10,4 +10,6 @@ object Constants {
 
     const val KELVIN: Double = 273.15
 
+    const val REQUEST_CODE_LOCATION_PERMISSIONS: Int = 100
+
 }

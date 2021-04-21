@@ -11,10 +11,10 @@ object CitiesWeatherRepository {
         Network.citiesWeatherService
     }
 
-    suspend fun getCityWeather(latitude: Float, longitude: Float): CityWeather =
+    suspend fun getCityWeather(latitude: Double, longitude: Double): CityWeather =
         withContext(Dispatchers.IO) {
             val response = service.getCityWeather(latitude, longitude)
-            Log.d("CitiesWeatherR", "getCityWeather: $response")
+            Log.d("CitiesWeatherR", "getCityWeather: ${response.body()}")
             return@withContext response.body()!!
         }
 

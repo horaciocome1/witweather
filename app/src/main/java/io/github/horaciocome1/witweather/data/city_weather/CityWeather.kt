@@ -5,6 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class CityWeather(
+    var name: String = "",
     var weather: MutableList<Weather> = mutableListOf(),
     var main: Main = Main(),
     var wind: Wind = Wind(),
