@@ -13,6 +13,7 @@ import io.github.horaciocome1.witweather.R
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
 import io.github.horaciocome1.witweather.databinding.FragmentCityWeatherBinding
 import io.github.horaciocome1.witweather.util.gone
+import io.github.horaciocome1.witweather.util.toSunrisePST
 import io.github.horaciocome1.witweather.util.visible
 import kotlin.math.roundToInt
 
@@ -58,7 +59,7 @@ class CityWeatherFragment : Fragment() {
         binding.contentInclude.tempTextView.text = getString(R.string.temp_min_max, min, max)
         binding.contentInclude.currentTempTextView.text = "${weather.main.temp.roundToInt()}"
         binding.contentInclude.mainTextView.text = weather.weather.first().main
-//        binding.sunriseTextView.text =
+        binding.contentInclude.sunriseTextView.text = weather.sys.toSunrisePST()
         val wind = weather.wind.speed.roundToInt()
         binding.contentInclude.windTextView.text = getString(R.string.wind_mps, wind)
         val realFeel = weather.main.feelsLike.roundToInt()
