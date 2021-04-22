@@ -36,7 +36,7 @@ class CitiesAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val city = dataSet[position]
         binding.cityNameTextView.text = cityNameBuilder(city.name, city.country)
-        val coverResId = CityCoverUtils.getCityCoverResId()
+        val coverResId = CityCoverUtils.getRandomCityCoverResId()
         binding.coverImageView.load(coverResId)
     }
 

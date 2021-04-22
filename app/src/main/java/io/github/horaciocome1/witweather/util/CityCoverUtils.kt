@@ -4,7 +4,7 @@ import io.github.horaciocome1.witweather.R
 
 object CityCoverUtils {
 
-    fun getCityCoverResId(): Int {
+    fun getRandomCityCoverResId(): Int {
         val covers = mutableListOf(
             R.drawable.ic_undraw_apartment_rent_o0ut,
             R.drawable.ic_undraw_at_home_octe,
