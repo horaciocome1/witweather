@@ -27,4 +27,10 @@
         Be sure we will keep fixing these bugs.
     </string>
     <string name="message_general_error">We were not able to complete your request</string>
+    <string name="city_cover">city cover</string>
+    <string name="arrow_right">arrow right</string>
+    <string name="wind_icon">wind icon</string>
+    <string name="temperature_icon">temperature icon</string>
+    <string name="sunrise_icon">sunrise icon</string>
+    <string name="weather_big_cover">weather big cover</string>
 </resources>

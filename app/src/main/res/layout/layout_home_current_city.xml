@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_gradient">
 
         <View
             android:id="@+id/view2"
             android:layout_width="0dp"
             android:layout_height="@dimen/radius_default"
+            android:layout_marginTop="128dp"
             android:background="@drawable/shape_top_rounded"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currentTempTextView"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/cityNameTextView"
@@ -44,8 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/o"
-            android:textColor="@color/white"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/currentTempTextView"
             app:layout_constraintStart_toEndOf="@+id/currentTempTextView"
             app:layout_constraintTop_toTopOf="@+id/currentTempTextView"
@@ -57,27 +61,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/c"
-            android:textColor="@color/white"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/currentTempTextView"
             app:layout_constraintStart_toEndOf="@+id/currentTempTextView"
             app:layout_constraintTop_toTopOf="@+id/currentTempTextView"
             app:layout_constraintVertical_bias="0.65" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/refreshButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
-            android:text="@string/refresh"
-            android:enabled="false"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/view2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/currentTempTextView" />
 
         <TextView
             android:id="@+id/tempTextView"
@@ -98,27 +87,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
+            android:contentDescription="@string/location_icon"
             app:layout_constraintBottom_toBottomOf="@+id/cityNameTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/cityNameTextView"
             app:srcCompat="@drawable/outline_person_pin_circle_24"
-            app:tint="@color/white"
-            android:contentDescription="@string/location_icon" />
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/tempImageView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/refreshButton"
+            android:contentDescription="@string/location_vector"
             app:layout_constraintEnd_toStartOf="@+id/tempTextView"
             app:layout_constraintStart_toEndOf="@+id/cityNameTextView"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_undraw_sunny_day_bk3m"
-            android:contentDescription="@string/location_vector" />
+            app:srcCompat="@drawable/ic_undraw_sunny_day_bk3m" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
