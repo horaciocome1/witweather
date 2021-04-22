@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import io.github.horaciocome1.witweather.R
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
 import io.github.horaciocome1.witweather.databinding.FragmentCityWeatherBinding
@@ -21,6 +22,11 @@ class CityWeatherFragment : Fragment() {
     private val viewModel: CityWeatherViewModel by viewModels()
 
     private lateinit var binding: FragmentCityWeatherBinding
+
+    private val snackbarError: Snackbar by lazy {
+        Snackbar.make(binding.root, getString(R.string.message_general_error), Snackbar.LENGTH_INDEFINITE)
+            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

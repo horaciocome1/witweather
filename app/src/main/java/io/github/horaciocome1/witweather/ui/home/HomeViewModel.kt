@@ -10,6 +10,7 @@ import io.github.horaciocome1.witweather.data.cities.CitiesRepository
 import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
 import io.github.horaciocome1.witweather.data.city_weather.GeoCoordinates
+import io.github.horaciocome1.witweather.util.NetworkCallResult
 import io.github.horaciocome1.witweather.util.isEmpty
 import io.github.horaciocome1.witweather.util.toCelsius
 import kotlinx.coroutines.launch
@@ -22,6 +23,11 @@ class HomeViewModel : ViewModel() {
 
     private var geoCoordinates: GeoCoordinates = GeoCoordinates(0.0, 0.0)
 
+    private val _callResult: MutableLiveData<NetworkCallResult> = MutableLiveData()
+
+    val callResult: LiveData<NetworkCallResult>
+        get() { return _callResult }
+
     fun getCities(): LiveData<MutableList<City>> {
         if (!cities.value.isNullOrEmpty()) {
             return cities
@@ -31,18 +37,24 @@ class HomeViewModel : ViewModel() {
     }
 
     fun getCityWeather(geoCoordinates: GeoCoordinates): LiveData<CityWeather> {
+        _callResult.value = NetworkCallResult.LOADING
         return when {
             geoCoordinates.isEmpty() -> cityWeather
             geoCoordinates == this.geoCoordinates -> cityWeather
             else -> {
                 this.geoCoordinates = geoCoordinates
                 viewModelScope.launch {
-                    val weather = CitiesWeatherRepository.getCityWeather(
+                    try {
+                        val weather = CitiesWeatherRepository.getCityWeather(
                             this@HomeViewModel.geoCoordinates.latitude,
                             this@HomeViewModel.geoCoordinates.longitude
-                    )
-                    weather.main.toCelsius()
-                    cityWeather.value = weather
+                        )
+                        weather.main.toCelsius()
+                        cityWeather.value = weather
+                        _callResult.value = NetworkCallResult.SUCCESS
+                    } catch (e: Exception) {
+                        _callResult.value = NetworkCallResult.ERROR
+                    }
                 }
                 cityWeather
             }

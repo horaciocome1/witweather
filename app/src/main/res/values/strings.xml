@@ -20,4 +20,11 @@
     <string name="temp_min_max_rf">MIN %1$d ºc\nMAX %2$d ºc\nRF %3$d ºc</string>
     <string name="location_icon">location icon</string>
     <string name="location_vector">location vector</string>
+    <string name="message_error">
+        This application is not in production yet.\n
+        If you landed here, some of the ideal conditions where not met.\n
+        Please check your internet connection, make sure location services are enabled, try again later, or try to reach the maintainer.\n
+        Be sure we will keep fixing these bugs.
+    </string>
+    <string name="message_general_error">We were not able to complete your request</string>
 </resources>

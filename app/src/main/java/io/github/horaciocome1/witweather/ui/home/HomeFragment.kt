@@ -38,6 +38,11 @@ class HomeFragment : Fragment() {
                 .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
     }
 
+    private val snackbarError: Snackbar by lazy {
+        Snackbar.make(binding.root, getString(R.string.message_general_error), Snackbar.LENGTH_INDEFINITE)
+            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,6 +64,12 @@ class HomeFragment : Fragment() {
         super.onStart()
         validatePermissions()
         getCities()
+        monitorNetworkCall()
+    }
+
+    private fun enableLocation() {
+        showLoading()
+        sharedViewModel.requestLocationPermission()
     }
 
     private fun validatePermissions() {
@@ -85,12 +96,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun getCities() {
-        viewModel.getCities().observe(this) {
-            citiesAdapter.dataSet = it
-        }
-    }
-
     private fun bindWeather(weather: CityWeather) {
         hideRequest()
         binding.currentCityInclude.cityNameTextView.text = weather.name
@@ -101,9 +106,19 @@ class HomeFragment : Fragment() {
         binding.currentCityInclude.tempTextView.text = getString(R.string.temp_min_max_rf, min, max, realFeel)
     }
 
-    private fun enableLocation() {
-        showLoading()
-        sharedViewModel.requestLocationPermission()
+    private fun getCities() {
+        viewModel.getCities().observe(this) {
+            citiesAdapter.dataSet = it
+        }
+    }
+
+    private fun monitorNetworkCall() {
+        viewModel.callResult.observe(viewLifecycleOwner) {
+            when (it) {
+                NetworkCallResult.ERROR -> snackbarError.show()
+                else -> snackbarError.dismiss()
+            }
+        }
     }
 
     private fun initRecyclerView() {
