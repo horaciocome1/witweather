@@ -12,7 +12,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/radius_default"
             android:layout_marginTop="128dp"
-            android:background="@drawable/shape_top_rounded"
+            android:background="@drawable/background_top_rounded"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
