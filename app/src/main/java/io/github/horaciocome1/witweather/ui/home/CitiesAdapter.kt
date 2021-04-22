@@ -12,7 +12,7 @@ import io.github.horaciocome1.witweather.util.CityCoverUtils
 
 
 class CitiesAdapter(
-    private val cityNameBuilder: (cityName: String, country: String) -> String
+    private val cityNameBuilder: (cityName: String, cityCountry: String) -> String
 ) : RecyclerView.Adapter<CitiesAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)

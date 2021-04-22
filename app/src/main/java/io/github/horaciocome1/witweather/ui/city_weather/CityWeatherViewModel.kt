@@ -17,9 +17,7 @@ class CityWeatherViewModel : ViewModel() {
     private var cityId: Int = 0
 
     fun getCityWeather(cityId: Int): LiveData<CityWeather> {
-        if (cityId != Constants.COMMAND_REFRESH) {
-            this.cityId = cityId
-        }
+        this.cityId = cityId
         fetchWeather()
         return cityWeather
     }

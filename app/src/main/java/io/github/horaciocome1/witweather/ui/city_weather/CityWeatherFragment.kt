@@ -2,7 +2,6 @@ package io.github.horaciocome1.witweather.ui.city_weather
 
 import android.animation.LayoutTransition
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,11 +48,10 @@ class CityWeatherFragment : Fragment() {
     }
 
     private fun getCityWeather(cityId: Int) {
-        viewModel.getCityWeather(cityId).observe(viewLifecycleOwner) { setWeatherToUI(it) }
+        viewModel.getCityWeather(cityId).observe(viewLifecycleOwner) { bindWeather(it) }
     }
 
-    private fun setWeatherToUI(weather: CityWeather) {
-        Log.d("CityWeatherF", "setWeatherToUI: $weather")
+    private fun bindWeather(weather: CityWeather) {
         val min = weather.main.tempMin.roundToInt()
         val max = weather.main.tempMax.roundToInt()
         binding.contentInclude.tempTextView.text = getString(R.string.temp_min_max, min, max)

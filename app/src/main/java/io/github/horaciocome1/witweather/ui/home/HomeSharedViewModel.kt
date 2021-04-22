@@ -24,12 +24,10 @@ class HomeSharedViewModel : ViewModel() {
         get() { return _geoCoordinates }
 
     fun requestLocationPermission() {
-        Log.d("HomeSharedVM", "requestLocationPermission: ")
         _isLocationPermissionRequested.value = true
     }
 
     fun setLocationPermissionGranted(isGranted: Boolean) {
-        Log.d("HomeSharedVM", "setLocationPermissionGranted: $isGranted")
         _isLocationPermissionGranted.value = isGranted
     }
 

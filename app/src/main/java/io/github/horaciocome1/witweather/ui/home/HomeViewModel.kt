@@ -10,6 +10,7 @@ import io.github.horaciocome1.witweather.data.cities.CitiesRepository
 import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
 import io.github.horaciocome1.witweather.data.city_weather.GeoCoordinates
+import io.github.horaciocome1.witweather.util.isEmpty
 import io.github.horaciocome1.witweather.util.toCelsius
 import kotlinx.coroutines.launch
 
@@ -19,7 +20,7 @@ class HomeViewModel : ViewModel() {
 
     private val cityWeather: MutableLiveData<CityWeather> = MutableLiveData()
 
-    private val geoCoordinates: GeoCoordinates = GeoCoordinates(0.0, 0.0)
+    private var geoCoordinates: GeoCoordinates = GeoCoordinates(0.0, 0.0)
 
     fun getCities(): LiveData<MutableList<City>> {
         if (!cities.value.isNullOrEmpty()) {
@@ -29,17 +30,16 @@ class HomeViewModel : ViewModel() {
         return cities
     }
 
-    fun getCityWeather(latitude: Double, longitude: Double): LiveData<CityWeather> {
+    fun getCityWeather(geoCoordinates: GeoCoordinates): LiveData<CityWeather> {
         return when {
-            latitude == 0.0 && longitude == 0.0 -> cityWeather
-            latitude == geoCoordinates.latitude && longitude == geoCoordinates.latitude -> cityWeather
+            geoCoordinates.isEmpty() -> cityWeather
+            geoCoordinates == this.geoCoordinates -> cityWeather
             else -> {
-                geoCoordinates.latitude = latitude
-                geoCoordinates.longitude = longitude
+                this.geoCoordinates = geoCoordinates
                 viewModelScope.launch {
                     val weather = CitiesWeatherRepository.getCityWeather(
-                            geoCoordinates.latitude,
-                            geoCoordinates.longitude
+                            this@HomeViewModel.geoCoordinates.latitude,
+                            this@HomeViewModel.geoCoordinates.longitude
                     )
                     weather.main.toCelsius()
                     cityWeather.value = weather
@@ -49,19 +49,9 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    fun refreshCityWeather() {
-        viewModelScope.launch {
-            cityWeather.value = CitiesWeatherRepository.getCityWeather(
-                    geoCoordinates.latitude,
-                    geoCoordinates.longitude
-            )
-        }
-    }
-
     fun navigateToCity(navController: NavController, cityId: Int, cityName: String) {
         val directions = HomeFragmentDirections.navigateCityWeather(cityId, cityName)
         navController.navigate(directions)
     }
-
 
 }
