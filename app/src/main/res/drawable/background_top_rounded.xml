@@ -15,10 +15,12 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <color name="deep_purple_200">#9a67ea</color>
-    <color name="deep_purple_500">#673ab7</color>
-    <color name="deep_purple_700">#320b86</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-</resources>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="@color/white" />
+
+    <corners
+        android:topLeftRadius="@dimen/radius_default"
+        android:topRightRadius="@dimen/radius_default" />
+
+</shape>

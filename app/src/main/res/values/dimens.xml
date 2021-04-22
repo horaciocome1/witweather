@@ -16,9 +16,7 @@
   -->
 
 <resources>
-    <color name="deep_purple_200">#9a67ea</color>
-    <color name="deep_purple_500">#673ab7</color>
-    <color name="deep_purple_700">#320b86</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <dimen name="radius_default">16dp</dimen>
+    <dimen name="line_spacing_extra_default">8sp</dimen>
+    <dimen name="progress_bar_width">32dp</dimen>
 </resources>

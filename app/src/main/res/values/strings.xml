@@ -1,3 +1,52 @@
+<!--
+  ~ Copyright 2021 Horácio Flávio Comé Júnior
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
 <resources>
     <string name="app_name">WIT Weather</string>
+    <string name="enable_my_location">Enable My Location</string>
+    <string name="o">o</string>
+    <string name="c">c</string>
+    <string name="refresh">Refresh</string>
+    <string name="top_cities">TOP CITIES</string>
+    <string name="version">WIT Software - v0.0.1</string>
+    <string name="disclaimer">Subject to WIT Software Privacy Policy and applicable Terms and Conditions.</string>
+    <string name="city_name">%1$s, %2$s</string>
+    <string name="temp_min_max">MIN %1$d ºc / MAX %2$d ºc</string>
+    <string name="wind_mps">%1$d m/s</string>
+    <string name="temp">%1$d ºc</string>
+    <string name="real_feel">Real feel</string>
+    <string name="wind">Wind</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="location_error">Can\'t get your current location.</string>
+    <string name="location_loading">Looking for your location…</string>
+    <string name="retry">Retry</string>
+    <string name="temp_min_max_rf">MIN %1$d ºc\nMAX %2$d ºc\nRF %3$d ºc</string>
+    <string name="location_icon">location icon</string>
+    <string name="location_vector">location vector</string>
+    <string name="message_error">
+        This application is not in production yet.\n
+        If you landed here, some of the ideal conditions where not met.\n
+        Please check your internet connection, make sure location services are enabled, try again later, or try to reach the maintainer.\n
+        Be sure we will keep fixing these bugs.
+    </string>
+    <string name="message_general_error">We were not able to complete your request</string>
+    <string name="city_cover">city cover</string>
+    <string name="arrow_right">arrow right</string>
+    <string name="wind_icon">wind icon</string>
+    <string name="temperature_icon">temperature icon</string>
+    <string name="sunrise_icon">sunrise icon</string>
+    <string name="weather_big_cover">weather big cover</string>
 </resources>
