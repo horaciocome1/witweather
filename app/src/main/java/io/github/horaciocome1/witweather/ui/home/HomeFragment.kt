@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import io.github.horaciocome1.simplerecyclerviewtouchlistener.addOnItemClickListener
 import io.github.horaciocome1.witweather.R
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
@@ -32,6 +33,11 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private val snackbarLoading: Snackbar by lazy {
+        Snackbar.make(binding.root, R.string.location_loading, Snackbar.LENGTH_INDEFINITE)
+                .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,6 +49,7 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        snackbarLoading.show()
         binding.container.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding.currentCityRequestInclude.enableMyLocationButton.setOnClickListener { enableLocation() }
         initRecyclerView()
@@ -122,6 +129,7 @@ class HomeFragment : Fragment() {
         binding.currentCityInclude.root.visible()
         binding.currentCityRequestInclude.root.gone()
         binding.constraintLayout.changeTopCitiesTextViewConstraints(R.id.currentCityInclude)
+        snackbarLoading.dismiss()
     }
 
     private fun showLoading() {

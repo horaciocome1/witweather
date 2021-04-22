@@ -10,6 +10,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
+import com.google.android.material.snackbar.Snackbar
+import io.github.horaciocome1.witweather.R
 import io.github.horaciocome1.witweather.databinding.ActivityMainBinding
 import io.github.horaciocome1.witweather.ui.home.HomeSharedViewModel
 import io.github.horaciocome1.witweather.util.Constants
@@ -71,11 +73,7 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             Constants.REQUEST_CODE_LOCATION_PERMISSIONS -> {
                 val isGranted = grantResults.first() == PackageManager.PERMISSION_GRANTED
-                if (isGranted) {
-                    sharedViewModel.setLocationPermissionGranted(true)
-                    return
-                }
-                sharedViewModel.setLocationPermissionGranted(false)
+                sharedViewModel.setLocationPermissionGranted(isGranted)
             }
         }
     }
@@ -93,10 +91,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isPermissionGranted(): Boolean {
-        val isFineLocationGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-        val isCoarseLocationGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-        val isPermissionGranted = isFineLocationGranted && isCoarseLocationGranted
+        val isFineLocationGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        val isCoarseLocationGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        val isPermissionGranted = isFineLocationGranted || isCoarseLocationGranted
         sharedViewModel.setLocationPermissionGranted(isPermissionGranted)
+        Log.d("MainActivity", "isPermissionGranted: $isPermissionGranted")
         return isPermissionGranted
     }
 
