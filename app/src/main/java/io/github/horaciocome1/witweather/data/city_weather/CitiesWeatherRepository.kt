@@ -14,14 +14,12 @@ object CitiesWeatherRepository {
     suspend fun getCityWeather(latitude: Double, longitude: Double): CityWeather =
         withContext(Dispatchers.IO) {
             val response = service.getCityWeather(latitude, longitude)
-            Log.d("CitiesWeatherR", "getCityWeather: ${response.body()}")
             return@withContext response.body()!!
         }
 
     suspend fun getCityWeather(cityId: Int): CityWeather =
         withContext(Dispatchers.IO) {
             val response = service.getCityWeather(cityId)
-            Log.d("CitiesWeatherR", "getCityWeather: $response")
             return@withContext response.body()!!
         }
 

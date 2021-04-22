@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken
 
 class CitiesService : CitiesServiceInterface {
 
-    @Suppress("BlockingMethodInNonBlockingContext")
     override suspend fun getCities(): MutableList<City> {
         return Gson().fromJson(
             CitiesFakeDataSource.json,
