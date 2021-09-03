@@ -94,6 +94,9 @@ dependencies {
     // LOCATION
     implementation 'com.google.android.gms:play-services-location:18.0.0'
 
+    // DEPENDENCY INJECTION
+    implementation "io.insert-koin:koin-android:$koin_version"
+
     // TEST
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
