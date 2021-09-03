@@ -22,12 +22,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
-import io.github.horaciocome1.witweather.util.Constants
 import io.github.horaciocome1.witweather.util.NetworkCallResult
 import io.github.horaciocome1.witweather.util.toCelsius
 import kotlinx.coroutines.launch
 
-class CityWeatherViewModel : ViewModel() {
+class CityWeatherViewModel(
+    private val repository: CitiesWeatherRepository
+) : ViewModel() {
 
     private val cityWeather: MutableLiveData<CityWeather> = MutableLiveData()
 
@@ -36,7 +37,9 @@ class CityWeatherViewModel : ViewModel() {
     private val _callResult: MutableLiveData<NetworkCallResult> = MutableLiveData()
 
     val callResult: LiveData<NetworkCallResult>
-        get() { return _callResult }
+        get() {
+            return _callResult
+        }
 
     fun getCityWeather(cityId: Int): LiveData<CityWeather> {
         this.cityId = cityId
@@ -54,7 +57,7 @@ class CityWeatherViewModel : ViewModel() {
         _callResult.value = NetworkCallResult.SUCCESS
         viewModelScope.launch {
             try {
-                val weather = CitiesWeatherRepository.getCityWeather(cityId)
+                val weather = repository.getCityWeather(cityId)
                 weather.main.toCelsius()
                 cityWeather.value = weather
                 _callResult.value = NetworkCallResult.SUCCESS
@@ -63,5 +66,4 @@ class CityWeatherViewModel : ViewModel() {
             }
         }
     }
-
 }

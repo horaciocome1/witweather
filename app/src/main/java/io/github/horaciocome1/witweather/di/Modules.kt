@@ -14,25 +14,47 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.data
+package io.github.horaciocome1.witweather.di
 
+import io.github.horaciocome1.witweather.data.cities.CitiesRepository
+import io.github.horaciocome1.witweather.data.cities.CitiesService
+import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
 import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherService
-import io.github.horaciocome1.witweather.data.city_weather.CityWeatherJsonAdapter
+import io.github.horaciocome1.witweather.ui.city_weather.CityWeatherViewModel
+import io.github.horaciocome1.witweather.ui.home.HomeViewModel
 import io.github.horaciocome1.witweather.util.Constants
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-object Network {
-
-    private val retrofit: Retrofit by lazy {
+val appModule = module {
+    single {
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
-
-    val citiesWeatherService: CitiesWeatherService by lazy {
-        retrofit.create(CitiesWeatherService::class.java)
+    factory {
+        CitiesService()
     }
+    factory {
+        get<Retrofit>().create(CitiesWeatherService::class.java) as
+            CitiesWeatherService
+    }
+    single {
+        CitiesRepository(get())
+    }
+    single {
+        CitiesWeatherRepository(get())
+    }
+}
 
+val viewModelModule = module {
+    viewModel {
+        HomeViewModel(get(), get())
+    }
+    viewModel {
+        CityWeatherViewModel(get())
+    }
 }

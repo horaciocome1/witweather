@@ -14,17 +14,26 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.data.cities
+package io.github.horaciocome1.witweather
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import android.app.Application
+import io.github.horaciocome1.witweather.di.appModule
+import io.github.horaciocome1.witweather.di.viewModelModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
-class CitiesRepository(
-    private val service: CitiesService
-) : CitiesServiceInterface {
+class MyApplication : Application() {
 
-    override suspend fun getCities(): MutableList<City> =
-        withContext(Dispatchers.IO) {
-            service.getCities()
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidContext(this@MyApplication)
+            modules(
+                listOf(
+                    appModule,
+                    viewModelModule
+                )
+            )
         }
+    }
 }

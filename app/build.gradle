@@ -29,8 +29,8 @@ android {
         applicationId "io.github.horaciocome1.witweather"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "0.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -93,6 +93,9 @@ dependencies {
 
     // LOCATION
     implementation 'com.google.android.gms:play-services-location:18.0.0'
+
+    // DEPENDENCY INJECTION
+    implementation "io.insert-koin:koin-android:3.1.2"
 
     // TEST
     testImplementation 'junit:junit:4.13.2'
