@@ -22,7 +22,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import io.github.horaciocome1.witweather.R
@@ -31,11 +30,12 @@ import io.github.horaciocome1.witweather.databinding.FragmentCityWeatherBinding
 import io.github.horaciocome1.witweather.util.gone
 import io.github.horaciocome1.witweather.util.toSunrisePST
 import io.github.horaciocome1.witweather.util.visible
+import org.koin.android.ext.android.inject
 import kotlin.math.roundToInt
 
 class CityWeatherFragment : Fragment() {
 
-    private val viewModel: CityWeatherViewModel by viewModels()
+    private val viewModel: CityWeatherViewModel by inject()
 
     private lateinit var binding: FragmentCityWeatherBinding
 
@@ -87,5 +87,4 @@ class CityWeatherFragment : Fragment() {
         binding.contentInclude.root.visible()
         binding.progressBar.gone()
     }
-
 }

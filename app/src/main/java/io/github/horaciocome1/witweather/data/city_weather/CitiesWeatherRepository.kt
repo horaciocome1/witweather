@@ -16,16 +16,12 @@
 
 package io.github.horaciocome1.witweather.data.city_weather
 
-import android.util.Log
-import io.github.horaciocome1.witweather.data.Network
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-object CitiesWeatherRepository {
-
-    private val service: CitiesWeatherService by lazy {
-        Network.citiesWeatherService
-    }
+class CitiesWeatherRepository(
+    private val service: CitiesWeatherService
+) {
 
     suspend fun getCityWeather(latitude: Double, longitude: Double): CityWeather =
         withContext(Dispatchers.IO) {
@@ -38,5 +34,4 @@ object CitiesWeatherRepository {
             val response = service.getCityWeather(cityId)
             return@withContext response.body()!!
         }
-
 }

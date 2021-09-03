@@ -21,8 +21,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import io.github.horaciocome1.witweather.data.cities.City
 import io.github.horaciocome1.witweather.data.cities.CitiesRepository
+import io.github.horaciocome1.witweather.data.cities.City
 import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
 import io.github.horaciocome1.witweather.data.city_weather.GeoCoordinates
@@ -31,7 +31,10 @@ import io.github.horaciocome1.witweather.util.isEmpty
 import io.github.horaciocome1.witweather.util.toCelsius
 import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val citiesRepository: CitiesRepository,
+    private val citiesWeatherRepository: CitiesWeatherRepository
+) : ViewModel() {
 
     private val cities: MutableLiveData<MutableList<City>> = MutableLiveData()
 
@@ -48,7 +51,7 @@ class HomeViewModel : ViewModel() {
         if (!cities.value.isNullOrEmpty()) {
             return cities
         }
-        viewModelScope.launch { cities.value = CitiesRepository.getCities() }
+        viewModelScope.launch { cities.value = citiesRepository.getCities() }
         return cities
     }
 
@@ -61,7 +64,7 @@ class HomeViewModel : ViewModel() {
                 this.geoCoordinates = geoCoordinates
                 viewModelScope.launch {
                     try {
-                        val weather = CitiesWeatherRepository.getCityWeather(
+                        val weather = citiesWeatherRepository.getCityWeather(
                             this@HomeViewModel.geoCoordinates.latitude,
                             this@HomeViewModel.geoCoordinates.longitude
                         )
@@ -81,5 +84,4 @@ class HomeViewModel : ViewModel() {
         val directions = HomeFragmentDirections.navigateCityWeather(cityId, cityName)
         navController.navigate(directions)
     }
-
 }

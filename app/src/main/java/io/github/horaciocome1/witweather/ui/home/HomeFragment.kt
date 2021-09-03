@@ -18,12 +18,11 @@ package io.github.horaciocome1.witweather.ui.home
 
 import android.animation.LayoutTransition
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -32,12 +31,18 @@ import io.github.horaciocome1.witweather.R
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
 import io.github.horaciocome1.witweather.data.city_weather.GeoCoordinates
 import io.github.horaciocome1.witweather.databinding.FragmentHomeBinding
-import io.github.horaciocome1.witweather.util.*
+import io.github.horaciocome1.witweather.util.NetworkCallResult
+import io.github.horaciocome1.witweather.util.changeTopCitiesTextViewConstraints
+import io.github.horaciocome1.witweather.util.disable
+import io.github.horaciocome1.witweather.util.enable
+import io.github.horaciocome1.witweather.util.gone
+import io.github.horaciocome1.witweather.util.visible
+import org.koin.android.ext.android.inject
 import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by inject()
 
     private val sharedViewModel: HomeSharedViewModel by activityViewModels()
 
@@ -51,7 +56,7 @@ class HomeFragment : Fragment() {
 
     private val snackbarLoading: Snackbar by lazy {
         Snackbar.make(binding.root, R.string.location_loading, Snackbar.LENGTH_INDEFINITE)
-                .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
     }
 
     private val snackbarError: Snackbar by lazy {
@@ -168,5 +173,4 @@ class HomeFragment : Fragment() {
         binding.currentCityInclude.root.gone()
         binding.currentCityRequestInclude.enableMyLocationButton.disable()
     }
-
 }
