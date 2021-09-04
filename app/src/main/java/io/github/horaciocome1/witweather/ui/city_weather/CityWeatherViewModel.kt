@@ -22,14 +22,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
-import io.github.horaciocome1.witweather.data.city_weather.LocalCacheRepository
+import io.github.horaciocome1.storage.LocalCacheRepository
 import io.github.horaciocome1.witweather.util.NetworkCallResult
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
 class CityWeatherViewModel(
     private val citiesWeatherRepository: CitiesWeatherRepository,
-    private val localCacheRepository: LocalCacheRepository
+    private val localCacheRepository: io.github.horaciocome1.storage.LocalCacheRepository
 ) : ViewModel() {
 
     companion object {

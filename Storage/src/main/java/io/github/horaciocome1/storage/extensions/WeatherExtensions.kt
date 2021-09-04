@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.data.city_weather
+package io.github.horaciocome1.storage.extensions
 
-class LocalCacheRepository(
-    private val service: LocalCacheServiceImpl
-) {
+import java.util.Calendar
+import java.util.Date
 
-    fun setCityWeather(
-        cityWeather: CityWeather
-    ) = service.setCityWeather(cityWeather)
+private const val KELVIN: Double = 273.15
 
-    fun getCityWeather(
-        cityId: Int
-    ): CityWeather? = service.getCityWeather(cityId)
+fun Double.asCelsius(): Double =
+    this - KELVIN
+
+fun Long.asSunrisePST(): String {
+    val date = Date(this * 1000L)
+    val calendar = Calendar.getInstance()
+    calendar.time = date
+    return "${calendar[Calendar.HOUR_OF_DAY]}:${calendar[Calendar.MINUTE]}"
 }

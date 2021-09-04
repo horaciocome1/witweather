@@ -20,8 +20,8 @@ import io.github.horaciocome1.witweather.data.cities.CitiesRepository
 import io.github.horaciocome1.witweather.data.cities.CitiesService
 import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
 import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherService
-import io.github.horaciocome1.witweather.data.city_weather.LocalCacheRepository
-import io.github.horaciocome1.witweather.data.city_weather.LocalCacheServiceImpl
+import io.github.horaciocome1.storage.LocalCacheRepository
+import io.github.horaciocome1.storage.LocalCacheServiceImpl
 import io.github.horaciocome1.witweather.ui.city_weather.CityWeatherViewModel
 import io.github.horaciocome1.witweather.ui.home.HomeViewModel
 import io.github.horaciocome1.witweather.util.Constants
@@ -63,10 +63,10 @@ val dataSourceModule = module {
 
     // region local cache
     factory {
-        LocalCacheServiceImpl()
+        io.github.horaciocome1.storage.LocalCacheServiceImpl()
     }
     single {
-        LocalCacheRepository(get())
+        io.github.horaciocome1.storage.LocalCacheRepository(get())
     }
     // endregion local cache
 }

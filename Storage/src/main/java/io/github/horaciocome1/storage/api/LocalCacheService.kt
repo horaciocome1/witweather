@@ -14,23 +14,30 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.data.city_weather
+package io.github.horaciocome1.storage.api
 
-interface LocalCacheService {
+import io.realm.Realm
+import io.realm.RealmModel
+import io.realm.kotlin.where
 
-    /**
-     * deletes existing object and save new to local database
-     * @param cityWeather is the weather to cache
-     */
-    fun setCityWeather(
-        cityWeather: CityWeather
-    )
+class LocalCacheService {
 
-    /**
-     * retrieves from local database existing weather data
-     * @return is null if there is no cached weather data
-     */
-    fun getCityWeather(
+    fun <T : RealmModel> setCityWeather(
+        cityWeather: T
+    ) {
+        Realm.getDefaultInstance()
+            .executeTransactionAsync {
+                it.insertOrUpdate(cityWeather)
+            }
+    }
+
+    inline fun <reified T : RealmModel> getCityWeather(
         cityId: Int
-    ): CityWeather?
+    ): T? =
+        Realm.getDefaultInstance()
+            .where<T>()
+            .findAll()
+            .where()
+            .equalTo("id", cityId)
+            .findFirst()
 }

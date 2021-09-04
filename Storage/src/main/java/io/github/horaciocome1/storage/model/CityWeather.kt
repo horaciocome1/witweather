@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.data.city_weather
+package io.github.horaciocome1.storage.model
 
-import io.github.horaciocome1.witweather.util.Constants
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
-import java.util.Calendar
-import java.util.Date
 
 open class CityWeather(
     @PrimaryKey var id: Int = 0,
@@ -34,27 +31,3 @@ open class CityWeather(
     var sysSunrise: String = "",
     var timeInMillis: Long = 0
 ) : RealmObject()
-
-fun CityWeatherResponse.asCityWeather(): CityWeather =
-    CityWeather(
-        id = id,
-        name = name,
-        weatherMain = weather.first().main,
-        temp = main.temp.asCelsius(),
-        tempMin = main.tempMin.asCelsius(),
-        tempMax = main.tempMax.asCelsius(),
-        feelsLike = main.feelsLike.asCelsius(),
-        windSpeed = wind.speed,
-        sysSunrise = sys.sunrise.asSunrisePST(),
-        timeInMillis = Calendar.getInstance().timeInMillis
-    )
-
-private fun Double.asCelsius(): Double =
-    this - Constants.KELVIN
-
-private fun Long.asSunrisePST(): String {
-    val date = Date(this * 1000L)
-    val calendar = Calendar.getInstance()
-    calendar.time = date
-    return "${calendar[Calendar.HOUR_OF_DAY]}:${calendar[Calendar.MINUTE]}"
-}

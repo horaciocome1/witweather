@@ -14,29 +14,20 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.data.city_weather
+package io.github.horaciocome1.storage.repositories
 
-import io.realm.Realm
-import io.realm.kotlin.where
+import io.github.horaciocome1.storage.api.LocalCacheService
+import io.realm.RealmModel
 
-class LocalCacheServiceImpl : LocalCacheService {
+class LocalCacheRepository(
+    val service: LocalCacheService
+) {
 
-    override fun setCityWeather(
-        cityWeather: CityWeather
-    ) {
-        Realm.getDefaultInstance()
-            .executeTransactionAsync {
-                it.insertOrUpdate(cityWeather)
-            }
-    }
+    fun <T : RealmModel> setCityWeather(
+        cityWeather: T
+    ) = service.setCityWeather(cityWeather)
 
-    override fun getCityWeather(
+    inline fun <reified T : RealmModel> getCityWeather(
         cityId: Int
-    ): CityWeather? =
-        Realm.getDefaultInstance()
-            .where<CityWeather>()
-            .findAll()
-            .where()
-            .equalTo("id", cityId)
-            .findFirst()
+    ): T? = service.getCityWeather<T>(cityId)
 }

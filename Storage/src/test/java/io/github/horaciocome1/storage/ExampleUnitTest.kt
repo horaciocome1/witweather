@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.util
+package io.github.horaciocome1.storage
 
-object Constants {
+import org.junit.Test
 
-    const val BASE_URL: String = "https://api.openweathermap.org/data/2.5/"
+import org.junit.Assert.*
 
-    const val API_KEY: String = "d2a45a7e30a218b55ef7d39a3ca98924"
-
-
-
-    const val REQUEST_CODE_LOCATION_PERMISSIONS: Int = 100
-
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ExampleUnitTest {
+    @Test
+    fun addition_isCorrect() {
+        assertEquals(4, 2 + 2)
+    }
 }

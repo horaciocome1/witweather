@@ -18,9 +18,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs.kotlin'
-    id 'realm-android'
 }
 
 android {
@@ -56,6 +54,7 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':Storage')
     def retrofit_version = '2.9.0'
     def moshi_version = '1.12.0'
     def lifecycle_version = '2.3.1'
