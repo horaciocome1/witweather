@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.util
+package io.github.horaciocome1.network.util
 
 enum class NetworkCallResult {
     LOADING,

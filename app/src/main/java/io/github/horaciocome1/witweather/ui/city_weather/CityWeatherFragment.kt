@@ -25,8 +25,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import io.github.horaciocome1.storage.model.CityWeather
 import io.github.horaciocome1.witweather.R
-import io.github.horaciocome1.witweather.data.city_weather.CityWeather
 import io.github.horaciocome1.witweather.databinding.FragmentCityWeatherBinding
 import io.github.horaciocome1.witweather.util.gone
 import io.github.horaciocome1.witweather.util.visible

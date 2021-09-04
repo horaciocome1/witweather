@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.util
+package io.github.horaciocome1.network.util
 
-import io.github.horaciocome1.network.city_weather.GeoCoordinates
+import io.github.horaciocome1.network.model.GeoCoordinates
 
-fun io.github.horaciocome1.network.city_weather.GeoCoordinates.isEmpty(): Boolean {
+fun GeoCoordinates.isEmpty(): Boolean {
     return latitude == 0.0 && longitude == 0.0
 }

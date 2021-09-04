@@ -17,7 +17,8 @@
 package io.github.horaciocome1.witweather
 
 import android.app.Application
-import io.github.horaciocome1.witweather.di.dataSourceModule
+import io.github.horaciocome1.witweather.di.localCacheModule
+import io.github.horaciocome1.witweather.di.networkModule
 import io.github.horaciocome1.witweather.di.viewModelModule
 import io.realm.Realm
 import org.koin.android.ext.koin.androidContext
@@ -32,7 +33,8 @@ class MyApplication : Application() {
             androidContext(this@MyApplication)
             modules(
                 listOf(
-                    dataSourceModule,
+                    networkModule,
+                    localCacheModule,
                     viewModelModule
                 )
             )

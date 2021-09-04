@@ -26,12 +26,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import io.github.horaciocome1.network.model.GeoCoordinates
+import io.github.horaciocome1.network.util.NetworkCallResult
 import io.github.horaciocome1.simplerecyclerviewtouchlistener.addOnItemClickListener
+import io.github.horaciocome1.storage.model.CityWeather
 import io.github.horaciocome1.witweather.R
-import io.github.horaciocome1.witweather.data.city_weather.CityWeather
-import io.github.horaciocome1.network.city_weather.GeoCoordinates
 import io.github.horaciocome1.witweather.databinding.FragmentHomeBinding
-import io.github.horaciocome1.witweather.util.NetworkCallResult
 import io.github.horaciocome1.witweather.util.changeTopCitiesTextViewConstraints
 import io.github.horaciocome1.witweather.util.disable
 import io.github.horaciocome1.witweather.util.enable
@@ -111,7 +111,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun getCityWeather(geoCoordinates: io.github.horaciocome1.network.city_weather.GeoCoordinates) {
+    private fun getCityWeather(geoCoordinates: GeoCoordinates) {
         viewModel.getCityWeather(geoCoordinates).observe(viewLifecycleOwner) {
             bindWeather(it)
         }

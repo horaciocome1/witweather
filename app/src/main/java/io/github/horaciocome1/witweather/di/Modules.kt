@@ -16,12 +16,12 @@
 
 package io.github.horaciocome1.witweather.di
 
-import io.github.horaciocome1.network.cities.CitiesRepository
-import io.github.horaciocome1.network.cities.CitiesService
-import io.github.horaciocome1.network.city_weather.CitiesWeatherRepository
-import io.github.horaciocome1.network.city_weather.CitiesWeatherService
-import io.github.horaciocome1.storage.LocalCacheRepository
-import io.github.horaciocome1.storage.LocalCacheServiceImpl
+import io.github.horaciocome1.network.api.CitiesService
+import io.github.horaciocome1.network.api.CitiesWeatherService
+import io.github.horaciocome1.network.repositories.CitiesRepository
+import io.github.horaciocome1.network.repositories.CitiesWeatherRepository
+import io.github.horaciocome1.storage.api.LocalCacheService
+import io.github.horaciocome1.storage.repositories.LocalCacheRepository
 import io.github.horaciocome1.witweather.ui.city_weather.CityWeatherViewModel
 import io.github.horaciocome1.witweather.ui.home.HomeViewModel
 import io.github.horaciocome1.witweather.util.Constants
@@ -31,7 +31,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 
-val dataSourceModule = module {
+val networkModule = module {
 
     // region retrofit
     single {
@@ -45,30 +45,33 @@ val dataSourceModule = module {
 
     // region cities
     factory {
-        io.github.horaciocome1.network.cities.CitiesService()
+        CitiesService()
     }
     single {
-        io.github.horaciocome1.network.cities.CitiesRepository(get())
+        CitiesRepository(get())
     }
     // endregion cities
 
     // region city's weather
     factory {
-        get<Retrofit>().create<io.github.horaciocome1.network.city_weather.CitiesWeatherService>()
+        get<Retrofit>().create<CitiesWeatherService>()
     }
     single {
-        io.github.horaciocome1.network.city_weather.CitiesWeatherRepository(get())
+        CitiesWeatherRepository(get())
     }
     // endregion city's weather
+    // endregion local cache
+}
+
+val localCacheModule = module {
 
     // region local cache
     factory {
-        io.github.horaciocome1.storage.LocalCacheServiceImpl()
+        LocalCacheService()
     }
     single {
-        io.github.horaciocome1.storage.LocalCacheRepository(get())
+        LocalCacheRepository(get())
     }
-    // endregion local cache
 }
 
 val viewModelModule = module {

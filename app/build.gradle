@@ -55,7 +55,9 @@ android {
 
 dependencies {
     implementation project(path: ':Storage')
+    implementation project(path: ':Network')
     def lifecycle_version = '2.3.1'
+    def retrofit_version = '2.9.0'
 
     // CORE
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -86,6 +88,10 @@ dependencies {
 
     // DEPENDENCY INJECTION
     implementation "io.insert-koin:koin-android:3.1.2"
+
+    // API
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
     // TEST
     testImplementation 'junit:junit:4.13.2'

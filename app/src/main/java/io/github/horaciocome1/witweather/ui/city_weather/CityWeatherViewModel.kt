@@ -20,16 +20,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.github.horaciocome1.network.city_weather.CitiesWeatherRepository
-import io.github.horaciocome1.witweather.data.city_weather.CityWeather
-import io.github.horaciocome1.storage.LocalCacheRepository
-import io.github.horaciocome1.witweather.util.NetworkCallResult
+import io.github.horaciocome1.network.repositories.CitiesWeatherRepository
+import io.github.horaciocome1.network.util.NetworkCallResult
+import io.github.horaciocome1.storage.model.CityWeather
+import io.github.horaciocome1.storage.repositories.LocalCacheRepository
+import io.github.horaciocome1.witweather.extensions.asCityWeather
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
 class CityWeatherViewModel(
-    private val citiesWeatherRepository: io.github.horaciocome1.network.city_weather.CitiesWeatherRepository,
-    private val localCacheRepository: io.github.horaciocome1.storage.LocalCacheRepository
+    private val citiesWeatherRepository: CitiesWeatherRepository,
+    private val localCacheRepository: LocalCacheRepository
 ) : ViewModel() {
 
     companion object {
@@ -60,7 +61,7 @@ class CityWeatherViewModel(
         refresh: Boolean
     ) {
         var ageInMillis = ONE_HOUR_IN_MILLIS
-        val weather = localCacheRepository.getCityWeather(cityId)
+        val weather = localCacheRepository.getCityWeather<CityWeather>(cityId)
             ?.also {
                 ageInMillis = Calendar.getInstance().timeInMillis - it.timeInMillis
             }
@@ -70,6 +71,7 @@ class CityWeatherViewModel(
         } else {
             viewModelScope.launch {
                 cityWeather.value = citiesWeatherRepository.getCityWeather(cityId)
+                    .asCityWeather()
                 localCacheRepository.setCityWeather(cityWeather.value!!)
                 _callResult.value = NetworkCallResult.SUCCESS_REMOTE
             }

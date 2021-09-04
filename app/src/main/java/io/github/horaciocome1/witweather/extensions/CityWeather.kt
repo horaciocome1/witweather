@@ -16,13 +16,13 @@
 
 package io.github.horaciocome1.witweather.extensions
 
+import io.github.horaciocome1.network.api.response.CityWeatherResponse
 import io.github.horaciocome1.storage.extensions.asCelsius
 import io.github.horaciocome1.storage.extensions.asSunrisePST
 import io.github.horaciocome1.storage.model.CityWeather
-import io.github.horaciocome1.network.city_weather.CityWeatherResponse
 import java.util.Calendar
 
-fun io.github.horaciocome1.network.city_weather.CityWeatherResponse.asCityWeather(): CityWeather =
+fun CityWeatherResponse.asCityWeather(): CityWeather =
     CityWeather(
         id = id,
         name = name,
