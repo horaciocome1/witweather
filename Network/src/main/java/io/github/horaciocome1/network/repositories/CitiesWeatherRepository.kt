@@ -17,6 +17,7 @@
 package io.github.horaciocome1.network.repositories
 
 import io.github.horaciocome1.network.api.CitiesWeatherService
+import io.github.horaciocome1.network.api.response.CityWeatherResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -27,19 +28,17 @@ class CitiesWeatherRepository(
     suspend fun getCityWeather(
         latitude: Double,
         longitude: Double,
-    ): CityWeather =
+    ): CityWeatherResponse =
         withContext(Dispatchers.IO) {
             return@withContext citiesWeatherService.getCityWeather(latitude, longitude)
                 .body()!!
-                .asCityWeather()
         }
 
     suspend fun getCityWeather(
         cityId: Int
-    ): CityWeather =
+    ): CityWeatherResponse =
         withContext(Dispatchers.IO) {
             return@withContext citiesWeatherService.getCityWeather(cityId)
                 .body()!!
-                .asCityWeather()
         }
 }
