@@ -22,7 +22,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import io.github.horaciocome1.witweather.data.cities.City
+import io.github.horaciocome1.network.cities.City
 import io.github.horaciocome1.witweather.databinding.ItemCityBinding
 import io.github.horaciocome1.witweather.util.CityCoverUtils
 
@@ -33,7 +33,7 @@ class CitiesAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-    var dataSet: MutableList<City> = mutableListOf()
+    var dataSet: MutableList<io.github.horaciocome1.network.cities.City> = mutableListOf()
         set(value) {
             val callback = CitiesDiffCallback(field, value)
             val result = DiffUtil.calculateDiff(callback)

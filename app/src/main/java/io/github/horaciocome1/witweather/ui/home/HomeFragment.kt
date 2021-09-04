@@ -29,7 +29,7 @@ import com.google.android.material.snackbar.Snackbar
 import io.github.horaciocome1.simplerecyclerviewtouchlistener.addOnItemClickListener
 import io.github.horaciocome1.witweather.R
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
-import io.github.horaciocome1.witweather.data.city_weather.GeoCoordinates
+import io.github.horaciocome1.network.city_weather.GeoCoordinates
 import io.github.horaciocome1.witweather.databinding.FragmentHomeBinding
 import io.github.horaciocome1.witweather.util.NetworkCallResult
 import io.github.horaciocome1.witweather.util.changeTopCitiesTextViewConstraints
@@ -111,7 +111,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun getCityWeather(geoCoordinates: GeoCoordinates) {
+    private fun getCityWeather(geoCoordinates: io.github.horaciocome1.network.city_weather.GeoCoordinates) {
         viewModel.getCityWeather(geoCoordinates).observe(viewLifecycleOwner) {
             bindWeather(it)
         }

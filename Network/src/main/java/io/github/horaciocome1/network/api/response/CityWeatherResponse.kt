@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.data.city_weather
+package io.github.horaciocome1.network.api.response
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

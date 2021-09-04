@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.util
+package io.github.horaciocome1.network.api
 
-import io.github.horaciocome1.network.city_weather.GeoCoordinates
+import io.github.horaciocome1.network.model.City
 
-fun io.github.horaciocome1.network.city_weather.GeoCoordinates.isEmpty(): Boolean {
-    return latitude == 0.0 && longitude == 0.0
+interface CitiesServiceInterface {
+
+    suspend fun getCities(): MutableList<City>
 }

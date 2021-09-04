@@ -21,25 +21,26 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import io.github.horaciocome1.witweather.data.cities.CitiesRepository
-import io.github.horaciocome1.witweather.data.cities.City
-import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
+import io.github.horaciocome1.network.cities.CitiesRepository
+import io.github.horaciocome1.network.cities.City
+import io.github.horaciocome1.network.city_weather.CitiesWeatherRepository
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
-import io.github.horaciocome1.witweather.data.city_weather.GeoCoordinates
+import io.github.horaciocome1.network.city_weather.GeoCoordinates
 import io.github.horaciocome1.witweather.util.NetworkCallResult
 import io.github.horaciocome1.witweather.util.isEmpty
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val citiesRepository: CitiesRepository,
-    private val citiesWeatherRepository: CitiesWeatherRepository
+    private val citiesRepository: io.github.horaciocome1.network.cities.CitiesRepository,
+    private val citiesWeatherRepository: io.github.horaciocome1.network.city_weather.CitiesWeatherRepository
 ) : ViewModel() {
 
-    private val cities: MutableLiveData<MutableList<City>> = MutableLiveData()
+    private val cities: MutableLiveData<MutableList<io.github.horaciocome1.network.cities.City>> = MutableLiveData()
 
     private val cityWeather: MutableLiveData<CityWeather> = MutableLiveData()
 
-    private var geoCoordinates: GeoCoordinates = GeoCoordinates(0.0, 0.0)
+    private var geoCoordinates: io.github.horaciocome1.network.city_weather.GeoCoordinates =
+        io.github.horaciocome1.network.city_weather.GeoCoordinates(0.0, 0.0)
 
     private val _callResult: MutableLiveData<NetworkCallResult> = MutableLiveData()
 
@@ -48,7 +49,7 @@ class HomeViewModel(
             return _callResult
         }
 
-    fun getCities(): LiveData<MutableList<City>> {
+    fun getCities(): LiveData<MutableList<io.github.horaciocome1.network.cities.City>> {
         if (!cities.value.isNullOrEmpty()) {
             return cities
         }
@@ -57,7 +58,7 @@ class HomeViewModel(
     }
 
     fun getCityWeather(
-        geoCoordinates: GeoCoordinates
+        geoCoordinates: io.github.horaciocome1.network.city_weather.GeoCoordinates
     ): LiveData<CityWeather> {
         _callResult.value = NetworkCallResult.LOADING
         return when {

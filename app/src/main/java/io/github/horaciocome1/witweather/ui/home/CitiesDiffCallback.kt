@@ -18,11 +18,11 @@ package io.github.horaciocome1.witweather.ui.home
 
 import androidx.annotation.Nullable
 import androidx.recyclerview.widget.DiffUtil
-import io.github.horaciocome1.witweather.data.cities.City
+import io.github.horaciocome1.network.cities.City
 
 class CitiesDiffCallback(
-    private val oldList: MutableList<City>,
-    private val newList: MutableList<City>
+    private val oldList: MutableList<io.github.horaciocome1.network.cities.City>,
+    private val newList: MutableList<io.github.horaciocome1.network.cities.City>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

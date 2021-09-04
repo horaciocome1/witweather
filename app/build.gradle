@@ -55,10 +55,7 @@ android {
 
 dependencies {
     implementation project(path: ':Storage')
-    def retrofit_version = '2.9.0'
-    def moshi_version = '1.12.0'
     def lifecycle_version = '2.3.1'
-    def coroutines_version = '1.4.1'
 
     // CORE
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -78,14 +75,6 @@ dependencies {
     // LIFECYCLE
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-
-    // API CALL
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
-    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
     // COROUTINES
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"

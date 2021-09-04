@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.data.cities
+package io.github.horaciocome1.network.api
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-
+import io.github.horaciocome1.network.model.City
 
 class CitiesService : CitiesServiceInterface {
 
@@ -28,5 +28,4 @@ class CitiesService : CitiesServiceInterface {
             object : TypeToken<MutableList<City?>?>() {}.type
         )
     }
-
 }

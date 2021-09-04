@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.data.cities
+package io.github.horaciocome1.network.util
 
-interface CitiesServiceInterface {
-
-    suspend fun getCities(): MutableList<City>
-
+object Constants {
+    const val API_KEY = "d2a45a7e30a218b55ef7d39a3ca98924"
 }

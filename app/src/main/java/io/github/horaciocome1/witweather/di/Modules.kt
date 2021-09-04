@@ -16,10 +16,10 @@
 
 package io.github.horaciocome1.witweather.di
 
-import io.github.horaciocome1.witweather.data.cities.CitiesRepository
-import io.github.horaciocome1.witweather.data.cities.CitiesService
-import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
-import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherService
+import io.github.horaciocome1.network.cities.CitiesRepository
+import io.github.horaciocome1.network.cities.CitiesService
+import io.github.horaciocome1.network.city_weather.CitiesWeatherRepository
+import io.github.horaciocome1.network.city_weather.CitiesWeatherService
 import io.github.horaciocome1.storage.LocalCacheRepository
 import io.github.horaciocome1.storage.LocalCacheServiceImpl
 import io.github.horaciocome1.witweather.ui.city_weather.CityWeatherViewModel
@@ -45,19 +45,19 @@ val dataSourceModule = module {
 
     // region cities
     factory {
-        CitiesService()
+        io.github.horaciocome1.network.cities.CitiesService()
     }
     single {
-        CitiesRepository(get())
+        io.github.horaciocome1.network.cities.CitiesRepository(get())
     }
     // endregion cities
 
     // region city's weather
     factory {
-        get<Retrofit>().create<CitiesWeatherService>()
+        get<Retrofit>().create<io.github.horaciocome1.network.city_weather.CitiesWeatherService>()
     }
     single {
-        CitiesWeatherRepository(get())
+        io.github.horaciocome1.network.city_weather.CitiesWeatherRepository(get())
     }
     // endregion city's weather
 

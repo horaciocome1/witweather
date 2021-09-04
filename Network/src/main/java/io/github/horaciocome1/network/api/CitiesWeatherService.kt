@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.data.city_weather
+package io.github.horaciocome1.network.api
 
-import io.github.horaciocome1.witweather.util.Constants
+import io.github.horaciocome1.network.api.response.CityWeatherResponse
+import io.github.horaciocome1.network.util.Constants
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

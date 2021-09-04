@@ -14,17 +14,32 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.data.cities
+package io.github.horaciocome1.network.repositories
 
+import io.github.horaciocome1.network.api.CitiesWeatherService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class CitiesRepository(
-    private val service: CitiesService
-) : CitiesServiceInterface {
+class CitiesWeatherRepository(
+    private val citiesWeatherService: CitiesWeatherService
+) {
 
-    override suspend fun getCities(): MutableList<City> =
+    suspend fun getCityWeather(
+        latitude: Double,
+        longitude: Double,
+    ): CityWeather =
         withContext(Dispatchers.IO) {
-            service.getCities()
+            return@withContext citiesWeatherService.getCityWeather(latitude, longitude)
+                .body()!!
+                .asCityWeather()
+        }
+
+    suspend fun getCityWeather(
+        cityId: Int
+    ): CityWeather =
+        withContext(Dispatchers.IO) {
+            return@withContext citiesWeatherService.getCityWeather(cityId)
+                .body()!!
+                .asCityWeather()
         }
 }

@@ -1,3 +1,4 @@
 include ':app'
 rootProject.name = "WIT Weather"
 include ':Storage'
+include ':Network'

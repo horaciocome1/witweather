@@ -14,9 +14,20 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.data.city_weather
+package io.github.horaciocome1.network
 
-data class GeoCoordinates(
-        var latitude: Double,
-        var longitude: Double
-)
+import org.junit.Test
+
+import org.junit.Assert.*
+
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ExampleUnitTest {
+    @Test
+    fun addition_isCorrect() {
+        assertEquals(4, 2 + 2)
+    }
+}
