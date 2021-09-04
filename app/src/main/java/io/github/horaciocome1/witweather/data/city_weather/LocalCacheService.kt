@@ -14,11 +14,23 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.util
+package io.github.horaciocome1.witweather.data.city_weather
 
-enum class NetworkCallResult {
-    LOADING,
-    SUCCESS_REMOTE,
-    SUCCESS_LOCAL,
-    ERROR
+interface LocalCacheService {
+
+    /**
+     * deletes existing object and save new to local database
+     * @param cityWeather is the weather to cache
+     */
+    fun setCityWeather(
+        cityWeather: CityWeather
+    )
+
+    /**
+     * retrieves from local database existing weather data
+     * @return is null if there is no cached weather data
+     */
+    fun getCityWeather(
+        cityId: Int
+    ): CityWeather?
 }

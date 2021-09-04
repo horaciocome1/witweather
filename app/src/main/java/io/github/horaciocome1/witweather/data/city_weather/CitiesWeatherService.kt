@@ -25,15 +25,14 @@ interface CitiesWeatherService {
 
     @GET("weather")
     suspend fun getCityWeather(
-            @Query("lat") latitude: Double,
-            @Query("lon") longitude: Double,
-            @Query("appid") apiKey: String = Constants.API_KEY
-    ): Response<CityWeather>
+        @Query("lat") latitude: Double,
+        @Query("lon") longitude: Double,
+        @Query("appid") apiKey: String = Constants.API_KEY
+    ): Response<CityWeatherResponse>
 
     @GET("weather")
     suspend fun getCityWeather(
         @Query("id") cityId: Int,
         @Query("appid") apiKey: String = Constants.API_KEY
-    ): Response<CityWeather>
-
+    ): Response<CityWeatherResponse>
 }

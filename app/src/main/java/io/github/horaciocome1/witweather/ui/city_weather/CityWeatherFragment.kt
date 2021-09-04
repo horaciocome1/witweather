@@ -18,6 +18,7 @@ package io.github.horaciocome1.witweather.ui.city_weather
 
 import android.animation.LayoutTransition
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,6 @@ import io.github.horaciocome1.witweather.R
 import io.github.horaciocome1.witweather.data.city_weather.CityWeather
 import io.github.horaciocome1.witweather.databinding.FragmentCityWeatherBinding
 import io.github.horaciocome1.witweather.util.gone
-import io.github.horaciocome1.witweather.util.toSunrisePST
 import io.github.horaciocome1.witweather.util.visible
 import org.koin.android.ext.android.inject
 import kotlin.math.roundToInt
@@ -70,19 +70,21 @@ class CityWeatherFragment : Fragment() {
     }
 
     private fun getCityWeather(cityId: Int) {
+        Log.d("Fragment", "getCityWeather: $cityId")
         viewModel.getCityWeather(cityId).observe(viewLifecycleOwner) { bindWeather(it) }
+        viewModel.callResult.observe(viewLifecycleOwner) {}
     }
 
-    private fun bindWeather(weather: CityWeather) {
-        val min = weather.main.tempMin.roundToInt()
-        val max = weather.main.tempMax.roundToInt()
+    private fun bindWeather(cityWeather: CityWeather) {
+        val min = cityWeather.tempMin.roundToInt()
+        val max = cityWeather.tempMax.roundToInt()
         binding.contentInclude.tempTextView.text = getString(R.string.temp_min_max, min, max)
-        binding.contentInclude.currentTempTextView.text = "${weather.main.temp.roundToInt()}"
-        binding.contentInclude.mainTextView.text = weather.weather.first().main
-        binding.contentInclude.sunriseTextView.text = weather.sys.toSunrisePST()
-        val wind = weather.wind.speed.roundToInt()
+        binding.contentInclude.currentTempTextView.text = "${cityWeather.temp.roundToInt()}"
+        binding.contentInclude.mainTextView.text = cityWeather.weatherMain
+        binding.contentInclude.sunriseTextView.text = cityWeather.sysSunrise
+        val wind = cityWeather.windSpeed.roundToInt()
         binding.contentInclude.windTextView.text = getString(R.string.wind_mps, wind)
-        val realFeel = weather.main.feelsLike.roundToInt()
+        val realFeel = cityWeather.feelsLike.roundToInt()
         binding.contentInclude.reealFeelTextView.text = getString(R.string.temp, realFeel)
         binding.contentInclude.root.visible()
         binding.progressBar.gone()

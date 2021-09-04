@@ -28,7 +28,6 @@ import io.github.horaciocome1.witweather.data.city_weather.CityWeather
 import io.github.horaciocome1.witweather.data.city_weather.GeoCoordinates
 import io.github.horaciocome1.witweather.util.NetworkCallResult
 import io.github.horaciocome1.witweather.util.isEmpty
-import io.github.horaciocome1.witweather.util.toCelsius
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -45,7 +44,9 @@ class HomeViewModel(
     private val _callResult: MutableLiveData<NetworkCallResult> = MutableLiveData()
 
     val callResult: LiveData<NetworkCallResult>
-        get() { return _callResult }
+        get() {
+            return _callResult
+        }
 
     fun getCities(): LiveData<MutableList<City>> {
         if (!cities.value.isNullOrEmpty()) {
@@ -55,7 +56,9 @@ class HomeViewModel(
         return cities
     }
 
-    fun getCityWeather(geoCoordinates: GeoCoordinates): LiveData<CityWeather> {
+    fun getCityWeather(
+        geoCoordinates: GeoCoordinates
+    ): LiveData<CityWeather> {
         _callResult.value = NetworkCallResult.LOADING
         return when {
             geoCoordinates.isEmpty() -> cityWeather
@@ -64,13 +67,11 @@ class HomeViewModel(
                 this.geoCoordinates = geoCoordinates
                 viewModelScope.launch {
                     try {
-                        val weather = citiesWeatherRepository.getCityWeather(
+                        cityWeather.value = citiesWeatherRepository.getCityWeather(
                             this@HomeViewModel.geoCoordinates.latitude,
                             this@HomeViewModel.geoCoordinates.longitude
                         )
-                        weather.main.toCelsius()
-                        cityWeather.value = weather
-                        _callResult.value = NetworkCallResult.SUCCESS
+                        _callResult.value = NetworkCallResult.SUCCESS_REMOTE
                     } catch (e: Exception) {
                         _callResult.value = NetworkCallResult.ERROR
                     }

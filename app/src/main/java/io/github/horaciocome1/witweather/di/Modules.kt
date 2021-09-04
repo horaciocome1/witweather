@@ -20,6 +20,8 @@ import io.github.horaciocome1.witweather.data.cities.CitiesRepository
 import io.github.horaciocome1.witweather.data.cities.CitiesService
 import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
 import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherService
+import io.github.horaciocome1.witweather.data.city_weather.LocalCacheRepository
+import io.github.horaciocome1.witweather.data.city_weather.LocalCacheServiceImpl
 import io.github.horaciocome1.witweather.ui.city_weather.CityWeatherViewModel
 import io.github.horaciocome1.witweather.ui.home.HomeViewModel
 import io.github.horaciocome1.witweather.util.Constants
@@ -27,27 +29,46 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.create
 
-val appModule = module {
+val dataSourceModule = module {
+
+    // region retrofit
     single {
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
-            .build()
+            .addConverterFactory(
+                MoshiConverterFactory.create()
+            ).build()
     }
+    // endregion retrofit
+
+    // region cities
     factory {
         CitiesService()
-    }
-    factory {
-        get<Retrofit>().create(CitiesWeatherService::class.java) as
-            CitiesWeatherService
     }
     single {
         CitiesRepository(get())
     }
+    // endregion cities
+
+    // region city's weather
+    factory {
+        get<Retrofit>().create<CitiesWeatherService>()
+    }
     single {
         CitiesWeatherRepository(get())
     }
+    // endregion city's weather
+
+    // region local cache
+    factory {
+        LocalCacheServiceImpl()
+    }
+    single {
+        LocalCacheRepository(get())
+    }
+    // endregion local cache
 }
 
 val viewModelModule = module {
@@ -55,6 +76,6 @@ val viewModelModule = module {
         HomeViewModel(get(), get())
     }
     viewModel {
-        CityWeatherViewModel(get())
+        CityWeatherViewModel(get(), get())
     }
 }
