@@ -14,28 +14,29 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather
+package io.github.horaciocome1.witweather.data.city_weather
 
-import android.app.Application
-import io.github.horaciocome1.witweather.di.dataSourceModule
-import io.github.horaciocome1.witweather.di.viewModelModule
 import io.realm.Realm
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
+import io.realm.kotlin.where
 
-class MyApplication : Application() {
+class LocalCacheServiceImpl : LocalCacheService {
 
-    override fun onCreate() {
-        super.onCreate()
-        Realm.init(this)
-        startKoin {
-            androidContext(this@MyApplication)
-            modules(
-                listOf(
-                    dataSourceModule,
-                    viewModelModule
-                )
-            )
-        }
+    override fun setCityWeather(
+        cityWeather: CityWeather
+    ) {
+        Realm.getDefaultInstance()
+            .executeTransactionAsync {
+                it.insertOrUpdate(cityWeather)
+            }
     }
+
+    override fun getCityWeather(
+        cityId: Int
+    ): CityWeather? =
+        Realm.getDefaultInstance()
+            .where<CityWeather>()
+            .findAll()
+            .where()
+            .equalTo("id", cityId)
+            .findFirst()
 }

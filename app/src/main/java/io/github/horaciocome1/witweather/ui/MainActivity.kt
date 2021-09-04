@@ -25,13 +25,14 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.*
-import com.google.android.material.snackbar.Snackbar
-import io.github.horaciocome1.witweather.R
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import io.github.horaciocome1.witweather.databinding.ActivityMainBinding
 import io.github.horaciocome1.witweather.ui.home.HomeSharedViewModel
 import io.github.horaciocome1.witweather.util.Constants
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     private val locationRequest: LocationRequest by lazy {
         val request = LocationRequest.create()
         request.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        request.interval = 2 * 60 * 1000
+        request.interval = 2 * 60 * 1000L
         return@lazy request
     }
 
@@ -81,9 +82,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
@@ -98,9 +99,9 @@ class MainActivity : AppCompatActivity() {
         sharedViewModel.isLocationPermissionRequested.observe(this) {
             if (it) {
                 ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                        Constants.REQUEST_CODE_LOCATION_PERMISSIONS
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    Constants.REQUEST_CODE_LOCATION_PERMISSIONS
                 )
             }
         }
@@ -119,5 +120,4 @@ class MainActivity : AppCompatActivity() {
     private fun monitorLocationChanges() {
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
     }
-
 }

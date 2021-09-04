@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.witweather.util
+package io.github.horaciocome1.witweather.data.city_weather
 
-enum class NetworkCallResult {
-    LOADING,
-    SUCCESS_REMOTE,
-    SUCCESS_LOCAL,
-    ERROR
+class LocalCacheRepository(
+    private val service: LocalCacheServiceImpl
+) {
+
+    fun setCityWeather(
+        cityWeather: CityWeather
+    ) = service.setCityWeather(cityWeather)
+
+    fun getCityWeather(
+        cityId: Int
+    ): CityWeather? = service.getCityWeather(cityId)
 }

@@ -117,14 +117,15 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun bindWeather(weather: CityWeather) {
+    private fun bindWeather(cityWeather: CityWeather) {
         hideRequest()
-        binding.currentCityInclude.cityNameTextView.text = weather.name
-        binding.currentCityInclude.currentTempTextView.text = "${weather.main.temp.roundToInt()}"
-        val min = weather.main.tempMin.roundToInt()
-        val max = weather.main.tempMax.roundToInt()
-        val realFeel = weather.main.feelsLike.roundToInt()
-        binding.currentCityInclude.tempTextView.text = getString(R.string.temp_min_max_rf, min, max, realFeel)
+        binding.currentCityInclude.cityNameTextView.text = cityWeather.name
+        binding.currentCityInclude.currentTempTextView.text = "${cityWeather.temp.roundToInt()}"
+        val min = cityWeather.tempMin.roundToInt()
+        val max = cityWeather.tempMax.roundToInt()
+        val realFeel = cityWeather.feelsLike.roundToInt()
+        binding.currentCityInclude.tempTextView.text =
+            getString(R.string.temp_min_max_rf, min, max, realFeel)
     }
 
     private fun getCities() {

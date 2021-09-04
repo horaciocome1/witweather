@@ -16,37 +16,45 @@
 
 package io.github.horaciocome1.witweather.data.city_weather
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import io.github.horaciocome1.witweather.util.Constants
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
+import java.util.Calendar
+import java.util.Date
 
-@JsonClass(generateAdapter = true)
-data class CityWeather(
+open class CityWeather(
+    @PrimaryKey var id: Int = 0,
     var name: String = "",
-    var weather: MutableList<Weather> = mutableListOf(),
-    var main: Main = Main(),
-    var wind: Wind = Wind(),
-    var sys: Sys = Sys()
-)
-
-@JsonClass(generateAdapter = true)
-data class Weather(
-    var main: String = ""
-)
-
-@JsonClass(generateAdapter = true)
-data class Main(
+    var weatherMain: String = "",
     var temp: Double = 0.0,
-    @Json(name = "feels_like") var feelsLike: Double = 0.0,
-    @Json(name = "temp_min") var tempMin: Double = 0.0,
-    @Json(name = "temp_max") var tempMax: Double = 0.0,
-)
+    var tempMin: Double = 0.0,
+    var tempMax: Double = 0.0,
+    var feelsLike: Double = 0.0,
+    var windSpeed: Double = 0.0,
+    var sysSunrise: String = "",
+    var timeInMillis: Long = 0
+) : RealmObject()
 
-@JsonClass(generateAdapter = true)
-data class Wind(
-    var speed: Double = 0.0
-)
+fun CityWeatherResponse.asCityWeather(): CityWeather =
+    CityWeather(
+        id = id,
+        name = name,
+        weatherMain = weather.first().main,
+        temp = main.temp.asCelsius(),
+        tempMin = main.tempMin.asCelsius(),
+        tempMax = main.tempMax.asCelsius(),
+        feelsLike = main.feelsLike.asCelsius(),
+        windSpeed = wind.speed,
+        sysSunrise = sys.sunrise.asSunrisePST(),
+        timeInMillis = Calendar.getInstance().timeInMillis
+    )
 
-@JsonClass(generateAdapter = true)
-data class Sys(
-    var sunrise: Long = 0
-)
+private fun Double.asCelsius(): Double =
+    this - Constants.KELVIN
+
+private fun Long.asSunrisePST(): String {
+    val date = Date(this * 1000L)
+    val calendar = Calendar.getInstance()
+    calendar.time = date
+    return "${calendar[Calendar.HOUR_OF_DAY]}:${calendar[Calendar.MINUTE]}"
+}

@@ -20,18 +20,25 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class CitiesWeatherRepository(
-    private val service: CitiesWeatherService
+    private val citiesWeatherService: CitiesWeatherService
 ) {
 
-    suspend fun getCityWeather(latitude: Double, longitude: Double): CityWeather =
+    suspend fun getCityWeather(
+        latitude: Double,
+        longitude: Double,
+    ): CityWeather =
         withContext(Dispatchers.IO) {
-            val response = service.getCityWeather(latitude, longitude)
-            return@withContext response.body()!!
+            return@withContext citiesWeatherService.getCityWeather(latitude, longitude)
+                .body()!!
+                .asCityWeather()
         }
 
-    suspend fun getCityWeather(cityId: Int): CityWeather =
+    suspend fun getCityWeather(
+        cityId: Int
+    ): CityWeather =
         withContext(Dispatchers.IO) {
-            val response = service.getCityWeather(cityId)
-            return@withContext response.body()!!
+            return@withContext citiesWeatherService.getCityWeather(cityId)
+                .body()!!
+                .asCityWeather()
         }
 }
