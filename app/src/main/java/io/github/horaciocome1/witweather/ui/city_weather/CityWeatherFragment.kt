@@ -18,15 +18,14 @@ package io.github.horaciocome1.witweather.ui.city_weather
 
 import android.animation.LayoutTransition
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import io.github.horaciocome1.storage.model.CityWeather
 import io.github.horaciocome1.witweather.R
-import io.github.horaciocome1.witweather.data.city_weather.CityWeather
 import io.github.horaciocome1.witweather.databinding.FragmentCityWeatherBinding
 import io.github.horaciocome1.witweather.util.gone
 import io.github.horaciocome1.witweather.util.visible
@@ -53,8 +52,8 @@ class CityWeatherFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.container.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.contentInclude.refreshButton.setOnClickListener { viewModel.refreshWeather() }
@@ -70,7 +69,6 @@ class CityWeatherFragment : Fragment() {
     }
 
     private fun getCityWeather(cityId: Int) {
-        Log.d("Fragment", "getCityWeather: $cityId")
         viewModel.getCityWeather(cityId).observe(viewLifecycleOwner) { bindWeather(it) }
         viewModel.callResult.observe(viewLifecycleOwner) {}
     }

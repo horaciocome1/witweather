@@ -20,10 +20,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
-import io.github.horaciocome1.witweather.data.city_weather.CityWeather
-import io.github.horaciocome1.witweather.data.city_weather.LocalCacheRepository
-import io.github.horaciocome1.witweather.util.NetworkCallResult
+import io.github.horaciocome1.network.repositories.CitiesWeatherRepository
+import io.github.horaciocome1.network.util.MyNetworkCallResult
+import io.github.horaciocome1.storage.model.CityWeather
+import io.github.horaciocome1.storage.repositories.LocalCacheRepository
+import io.github.horaciocome1.storage.util.MyStorageCallResult
+import io.github.horaciocome1.witweather.extensions.asCityWeather
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
@@ -40,9 +42,9 @@ class CityWeatherViewModel(
 
     private var cityId: Int = 0
 
-    private val _callResult: MutableLiveData<NetworkCallResult> = MutableLiveData()
+    private val _callResult: MutableLiveData<MyNetworkCallResult> = MutableLiveData()
 
-    val callResult: LiveData<NetworkCallResult> = _callResult
+    val callResult: LiveData<MyNetworkCallResult> = _callResult
 
     fun getCityWeather(cityId: Int): LiveData<CityWeather> {
         this.cityId = cityId
@@ -60,18 +62,24 @@ class CityWeatherViewModel(
         refresh: Boolean
     ) {
         var ageInMillis = ONE_HOUR_IN_MILLIS
-        val weather = localCacheRepository.getCityWeather(cityId)
-            ?.also {
-                ageInMillis = Calendar.getInstance().timeInMillis - it.timeInMillis
-            }
-        if (weather != null && !refresh && ageInMillis < ONE_HOUR_IN_MILLIS) {
-            cityWeather.value = weather
-            _callResult.value = NetworkCallResult.SUCCESS_LOCAL
+        val storageResult = localCacheRepository.getCityWeather<CityWeather>(cityId)
+        storageResult.data?.also {
+            ageInMillis = Calendar.getInstance().timeInMillis - it.timeInMillis
+        }
+        if (storageResult.callResult == MyStorageCallResult.SUCCESS &&
+            storageResult.data != null &&
+            !refresh &&
+            ageInMillis < ONE_HOUR_IN_MILLIS
+        ) {
+            cityWeather.value = storageResult.data!!
+            _callResult.value = MyNetworkCallResult.SUCCESS_LOCAL
         } else {
             viewModelScope.launch {
-                cityWeather.value = citiesWeatherRepository.getCityWeather(cityId)
-                localCacheRepository.setCityWeather(cityWeather.value!!)
-                _callResult.value = NetworkCallResult.SUCCESS_REMOTE
+                val networkResult = citiesWeatherRepository.getCityWeather(cityId)
+                _callResult.value = networkResult.callResult
+                networkResult.data?.let {
+                    cityWeather.value = it.asCityWeather()
+                }
             }
         }
     }

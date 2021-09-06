@@ -19,7 +19,7 @@ package io.github.horaciocome1.witweather.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.github.horaciocome1.witweather.data.city_weather.GeoCoordinates
+import io.github.horaciocome1.network.model.GeoCoordinates
 
 class HomeSharedViewModel : ViewModel() {
 
@@ -31,7 +31,7 @@ class HomeSharedViewModel : ViewModel() {
     private val _isLocationPermissionGranted: MutableLiveData<Boolean> = MutableLiveData()
 
     val isLocationPermissionGranted: LiveData<Boolean>
-        get() {return  _isLocationPermissionGranted}
+        get() { return _isLocationPermissionGranted }
 
     private val _geoCoordinates: MutableLiveData<GeoCoordinates> = MutableLiveData()
 
@@ -49,5 +49,4 @@ class HomeSharedViewModel : ViewModel() {
     fun setGeoCoordinates(latitude: Double, longitude: Double) {
         _geoCoordinates.value = GeoCoordinates(latitude, longitude)
     }
-
 }

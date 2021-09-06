@@ -22,10 +22,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import io.github.horaciocome1.witweather.data.cities.City
+import io.github.horaciocome1.network.model.City
 import io.github.horaciocome1.witweather.databinding.ItemCityBinding
 import io.github.horaciocome1.witweather.util.CityCoverUtils
-
 
 class CitiesAdapter(
     private val cityNameBuilder: (cityName: String, cityCountry: String) -> String
@@ -57,6 +56,4 @@ class CitiesAdapter(
     }
 
     override fun getItemCount() = dataSet.size
-
 }
-

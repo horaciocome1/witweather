@@ -26,12 +26,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import io.github.horaciocome1.network.model.GeoCoordinates
+import io.github.horaciocome1.network.util.MyNetworkCallResult
 import io.github.horaciocome1.simplerecyclerviewtouchlistener.addOnItemClickListener
+import io.github.horaciocome1.storage.model.CityWeather
 import io.github.horaciocome1.witweather.R
-import io.github.horaciocome1.witweather.data.city_weather.CityWeather
-import io.github.horaciocome1.witweather.data.city_weather.GeoCoordinates
 import io.github.horaciocome1.witweather.databinding.FragmentHomeBinding
-import io.github.horaciocome1.witweather.util.NetworkCallResult
 import io.github.horaciocome1.witweather.util.changeTopCitiesTextViewConstraints
 import io.github.horaciocome1.witweather.util.disable
 import io.github.horaciocome1.witweather.util.enable
@@ -73,8 +73,8 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         snackbarLoading.show()
         binding.container.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding.currentCityRequestInclude.enableMyLocationButton.setOnClickListener { enableLocation() }
@@ -137,7 +137,7 @@ class HomeFragment : Fragment() {
     private fun monitorNetworkCall() {
         viewModel.callResult.observe(viewLifecycleOwner) {
             when (it) {
-                NetworkCallResult.ERROR -> snackbarError.show()
+                MyNetworkCallResult.ERROR -> snackbarError.show()
                 else -> snackbarError.dismiss()
             }
         }

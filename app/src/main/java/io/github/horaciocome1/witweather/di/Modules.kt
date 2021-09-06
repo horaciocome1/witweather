@@ -16,12 +16,12 @@
 
 package io.github.horaciocome1.witweather.di
 
-import io.github.horaciocome1.witweather.data.cities.CitiesRepository
-import io.github.horaciocome1.witweather.data.cities.CitiesService
-import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherRepository
-import io.github.horaciocome1.witweather.data.city_weather.CitiesWeatherService
-import io.github.horaciocome1.witweather.data.city_weather.LocalCacheRepository
-import io.github.horaciocome1.witweather.data.city_weather.LocalCacheServiceImpl
+import io.github.horaciocome1.network.api.CitiesServiceImpl
+import io.github.horaciocome1.network.api.CitiesWeatherService
+import io.github.horaciocome1.network.repositories.CitiesRepository
+import io.github.horaciocome1.network.repositories.CitiesWeatherRepository
+import io.github.horaciocome1.storage.api.LocalCacheService
+import io.github.horaciocome1.storage.repositories.LocalCacheRepository
 import io.github.horaciocome1.witweather.ui.city_weather.CityWeatherViewModel
 import io.github.horaciocome1.witweather.ui.home.HomeViewModel
 import io.github.horaciocome1.witweather.util.Constants
@@ -31,7 +31,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 
-val dataSourceModule = module {
+val networkModule = module {
 
     // region retrofit
     single {
@@ -45,7 +45,7 @@ val dataSourceModule = module {
 
     // region cities
     factory {
-        CitiesService()
+        CitiesServiceImpl()
     }
     single {
         CitiesRepository(get())
@@ -60,15 +60,18 @@ val dataSourceModule = module {
         CitiesWeatherRepository(get())
     }
     // endregion city's weather
+    // endregion local cache
+}
+
+val localCacheModule = module {
 
     // region local cache
     factory {
-        LocalCacheServiceImpl()
+        LocalCacheService()
     }
     single {
         LocalCacheRepository(get())
     }
-    // endregion local cache
 }
 
 val viewModelModule = module {
