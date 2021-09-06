@@ -44,7 +44,7 @@ class CityWeatherViewModel(
 
     private val _callResult: MutableLiveData<MyNetworkCallResult> = MutableLiveData()
 
-    val callResultMy: LiveData<MyNetworkCallResult> = _callResult
+    val callResult: LiveData<MyNetworkCallResult> = _callResult
 
     fun getCityWeather(cityId: Int): LiveData<CityWeather> {
         this.cityId = cityId
