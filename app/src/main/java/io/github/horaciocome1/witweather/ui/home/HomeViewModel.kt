@@ -25,7 +25,7 @@ import io.github.horaciocome1.network.model.City
 import io.github.horaciocome1.network.model.GeoCoordinates
 import io.github.horaciocome1.network.repositories.CitiesRepository
 import io.github.horaciocome1.network.repositories.CitiesWeatherRepository
-import io.github.horaciocome1.network.util.NetworkCallResult
+import io.github.horaciocome1.network.util.MyNetworkCallResult
 import io.github.horaciocome1.network.util.isEmpty
 import io.github.horaciocome1.storage.model.CityWeather
 import io.github.horaciocome1.witweather.extensions.asCityWeather
@@ -42,9 +42,9 @@ class HomeViewModel(
 
     private var geoCoordinates: GeoCoordinates = GeoCoordinates(0.0, 0.0)
 
-    private val _callResult: MutableLiveData<NetworkCallResult> = MutableLiveData()
+    private val _callResult: MutableLiveData<MyNetworkCallResult> = MutableLiveData()
 
-    val callResult: LiveData<NetworkCallResult>
+    val callResult: LiveData<MyNetworkCallResult>
         get() {
             return _callResult
         }
@@ -53,14 +53,20 @@ class HomeViewModel(
         if (!cities.value.isNullOrEmpty()) {
             return cities
         }
-        viewModelScope.launch { cities.value = citiesRepository.getCities() }
+        viewModelScope.launch {
+            val result = citiesRepository.getCities()
+            _callResult.value = result.callResult
+            result.data?.let {
+                cities.value = it
+            }
+        }
         return cities
     }
 
     fun getCityWeather(
         geoCoordinates: GeoCoordinates
     ): LiveData<CityWeather> {
-        _callResult.value = NetworkCallResult.LOADING
+        _callResult.value = MyNetworkCallResult.LOADING
         return when {
             geoCoordinates.isEmpty() -> cityWeather
             geoCoordinates == this.geoCoordinates -> cityWeather
@@ -68,13 +74,16 @@ class HomeViewModel(
                 this.geoCoordinates = geoCoordinates
                 viewModelScope.launch {
                     try {
-                        cityWeather.value = citiesWeatherRepository.getCityWeather(
+                        val result = citiesWeatherRepository.getCityWeather(
                             this@HomeViewModel.geoCoordinates.latitude,
                             this@HomeViewModel.geoCoordinates.longitude
-                        ).asCityWeather()
-                        _callResult.value = NetworkCallResult.SUCCESS_REMOTE
+                        )
+                        _callResult.value = result.callResult
+                        result.data?.let {
+                            cityWeather.value = it.asCityWeather()
+                        }
                     } catch (e: Exception) {
-                        _callResult.value = NetworkCallResult.ERROR
+                        _callResult.value = MyNetworkCallResult.ERROR
                     }
                 }
                 cityWeather

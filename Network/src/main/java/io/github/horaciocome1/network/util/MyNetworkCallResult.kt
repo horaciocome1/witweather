@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package io.github.horaciocome1.network.api
+package io.github.horaciocome1.network.util
 
-import io.github.horaciocome1.network.model.City
-
-interface CitiesService {
-
-    suspend fun getCities(): MutableList<City>
+enum class MyNetworkCallResult {
+    LOADING,
+    SUCCESS_REMOTE,
+    SUCCESS_LOCAL,
+    ERROR,
+    ERROR_OUT_OF_REACH
 }

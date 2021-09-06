@@ -27,7 +27,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import io.github.horaciocome1.network.model.GeoCoordinates
-import io.github.horaciocome1.network.util.NetworkCallResult
+import io.github.horaciocome1.network.util.MyNetworkCallResult
 import io.github.horaciocome1.simplerecyclerviewtouchlistener.addOnItemClickListener
 import io.github.horaciocome1.storage.model.CityWeather
 import io.github.horaciocome1.witweather.R
@@ -137,7 +137,7 @@ class HomeFragment : Fragment() {
     private fun monitorNetworkCall() {
         viewModel.callResult.observe(viewLifecycleOwner) {
             when (it) {
-                NetworkCallResult.ERROR -> snackbarError.show()
+                MyNetworkCallResult.ERROR -> snackbarError.show()
                 else -> snackbarError.dismiss()
             }
         }

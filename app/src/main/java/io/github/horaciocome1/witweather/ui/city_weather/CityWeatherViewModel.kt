@@ -21,7 +21,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.horaciocome1.network.repositories.CitiesWeatherRepository
-import io.github.horaciocome1.network.util.NetworkCallResult
+import io.github.horaciocome1.network.util.MyNetworkCallResult
 import io.github.horaciocome1.storage.model.CityWeather
 import io.github.horaciocome1.storage.repositories.LocalCacheRepository
 import io.github.horaciocome1.storage.util.MyStorageCallResult
@@ -42,9 +42,9 @@ class CityWeatherViewModel(
 
     private var cityId: Int = 0
 
-    private val _callResult: MutableLiveData<NetworkCallResult> = MutableLiveData()
+    private val _callResult: MutableLiveData<MyNetworkCallResult> = MutableLiveData()
 
-    val callResult: LiveData<NetworkCallResult> = _callResult
+    val callResultMy: LiveData<MyNetworkCallResult> = _callResult
 
     fun getCityWeather(cityId: Int): LiveData<CityWeather> {
         this.cityId = cityId
@@ -62,23 +62,24 @@ class CityWeatherViewModel(
         refresh: Boolean
     ) {
         var ageInMillis = ONE_HOUR_IN_MILLIS
-        val result = localCacheRepository.getCityWeather<CityWeather>(cityId)
-        result.data?.also {
+        val storageResult = localCacheRepository.getCityWeather<CityWeather>(cityId)
+        storageResult.data?.also {
             ageInMillis = Calendar.getInstance().timeInMillis - it.timeInMillis
         }
-        if (result.callResult == MyStorageCallResult.SUCCESS &&
-            result.data != null &&
+        if (storageResult.callResult == MyStorageCallResult.SUCCESS &&
+            storageResult.data != null &&
             !refresh &&
             ageInMillis < ONE_HOUR_IN_MILLIS
         ) {
-            cityWeather.value = result.data!!
-            _callResult.value = NetworkCallResult.SUCCESS_LOCAL
+            cityWeather.value = storageResult.data!!
+            _callResult.value = MyNetworkCallResult.SUCCESS_LOCAL
         } else {
             viewModelScope.launch {
-                cityWeather.value = citiesWeatherRepository.getCityWeather(cityId)
-                    .asCityWeather()
-                localCacheRepository.setCityWeather(cityWeather.value!!)
-                _callResult.value = NetworkCallResult.SUCCESS_REMOTE
+                val networkResult = citiesWeatherRepository.getCityWeather(cityId)
+                _callResult.value = networkResult.callResult
+                networkResult.data?.let {
+                    cityWeather.value = it.asCityWeather()
+                }
             }
         }
     }

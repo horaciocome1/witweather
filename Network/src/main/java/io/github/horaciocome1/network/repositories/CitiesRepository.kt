@@ -16,18 +16,26 @@
 
 package io.github.horaciocome1.network.repositories
 
-import io.github.horaciocome1.network.api.CitiesService
-import io.github.horaciocome1.network.api.CitiesServiceInterface
+import io.github.horaciocome1.network.api.CitiesServiceImpl
 import io.github.horaciocome1.network.model.City
+import io.github.horaciocome1.network.util.MyNetworkCallResult
+import io.github.horaciocome1.network.util.MyNetworkRequestResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class CitiesRepository(
-    private val service: CitiesService
-) : CitiesServiceInterface {
+    private val service: CitiesServiceImpl
+) {
 
-    override suspend fun getCities(): MutableList<City> =
+    suspend fun getCities(): MyNetworkRequestResult<MutableList<City>> =
         withContext(Dispatchers.IO) {
-            service.getCities()
+            return@withContext try {
+                val cities = service.getCities()
+                MyNetworkRequestResult.success(cities)
+            } catch (e: Exception) {
+                MyNetworkRequestResult.error(
+                    MyNetworkCallResult.ERROR
+                )
+            }
         }
 }

@@ -18,6 +18,8 @@ package io.github.horaciocome1.network.repositories
 
 import io.github.horaciocome1.network.api.CitiesWeatherService
 import io.github.horaciocome1.network.api.response.CityWeatherResponse
+import io.github.horaciocome1.network.util.MyNetworkCallResult
+import io.github.horaciocome1.network.util.MyNetworkRequestResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -28,17 +30,43 @@ class CitiesWeatherRepository(
     suspend fun getCityWeather(
         latitude: Double,
         longitude: Double,
-    ): CityWeatherResponse =
+    ): MyNetworkRequestResult<CityWeatherResponse> =
         withContext(Dispatchers.IO) {
-            return@withContext citiesWeatherService.getCityWeather(latitude, longitude)
-                .body()!!
+            return@withContext try {
+                val weather = citiesWeatherService.getCityWeather(latitude, longitude)
+                    .body()
+                if (weather != null) {
+                    MyNetworkRequestResult.success(weather)
+                } else {
+                    MyNetworkRequestResult.error(
+                        MyNetworkCallResult.ERROR
+                    )
+                }
+            } catch (e: Exception) {
+                MyNetworkRequestResult.error(
+                    MyNetworkCallResult.ERROR_OUT_OF_REACH
+                )
+            }
         }
 
     suspend fun getCityWeather(
         cityId: Int
-    ): CityWeatherResponse =
+    ): MyNetworkRequestResult<CityWeatherResponse> =
         withContext(Dispatchers.IO) {
-            return@withContext citiesWeatherService.getCityWeather(cityId)
-                .body()!!
+            return@withContext try {
+                val weather = citiesWeatherService.getCityWeather(cityId)
+                    .body()
+                if (weather != null) {
+                    MyNetworkRequestResult.success(weather)
+                } else {
+                    MyNetworkRequestResult.error(
+                        MyNetworkCallResult.ERROR
+                    )
+                }
+            } catch (e: Exception) {
+                MyNetworkRequestResult.error(
+                    MyNetworkCallResult.ERROR_OUT_OF_REACH
+                )
+            }
         }
 }

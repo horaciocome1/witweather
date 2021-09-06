@@ -16,9 +16,16 @@
 
 package io.github.horaciocome1.network.api
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.github.horaciocome1.network.model.City
 
-interface CitiesServiceInterface {
+class CitiesServiceImpl : CitiesService {
 
-    suspend fun getCities(): MutableList<City>
+    override suspend fun getCities(): MutableList<City> {
+        return Gson().fromJson(
+            CitiesFakeDataSource.json,
+            object : TypeToken<MutableList<City?>?>() {}.type
+        )
+    }
 }

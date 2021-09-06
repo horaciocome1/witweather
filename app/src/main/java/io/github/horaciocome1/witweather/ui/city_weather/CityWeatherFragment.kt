@@ -72,7 +72,7 @@ class CityWeatherFragment : Fragment() {
     private fun getCityWeather(cityId: Int) {
         Log.d("Fragment", "getCityWeather: $cityId")
         viewModel.getCityWeather(cityId).observe(viewLifecycleOwner) { bindWeather(it) }
-        viewModel.callResult.observe(viewLifecycleOwner) {}
+        viewModel.callResultMy.observe(viewLifecycleOwner) {}
     }
 
     private fun bindWeather(cityWeather: CityWeather) {

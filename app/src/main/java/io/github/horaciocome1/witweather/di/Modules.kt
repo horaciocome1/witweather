@@ -16,7 +16,7 @@
 
 package io.github.horaciocome1.witweather.di
 
-import io.github.horaciocome1.network.api.CitiesService
+import io.github.horaciocome1.network.api.CitiesServiceImpl
 import io.github.horaciocome1.network.api.CitiesWeatherService
 import io.github.horaciocome1.network.repositories.CitiesRepository
 import io.github.horaciocome1.network.repositories.CitiesWeatherRepository
@@ -45,7 +45,7 @@ val networkModule = module {
 
     // region cities
     factory {
-        CitiesService()
+        CitiesServiceImpl()
     }
     single {
         CitiesRepository(get())

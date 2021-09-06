@@ -16,9 +16,27 @@
 
 package io.github.horaciocome1.network.util
 
-enum class NetworkCallResult {
-    LOADING,
-    SUCCESS_REMOTE,
-    SUCCESS_LOCAL,
-    ERROR
+data class MyNetworkRequestResult<out T>(
+    val callResult: MyNetworkCallResult,
+    val data: T?
+) {
+
+    companion object {
+
+        fun <T> success(
+            data: T? = null
+        ): MyNetworkRequestResult<T> =
+            MyNetworkRequestResult(
+                MyNetworkCallResult.SUCCESS_REMOTE,
+                data
+            )
+
+        fun <T> error(
+            callResultError: MyNetworkCallResult
+        ): MyNetworkRequestResult<T> =
+            MyNetworkRequestResult(
+                callResultError,
+                null
+            )
+    }
 }
