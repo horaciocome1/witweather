@@ -17,6 +17,8 @@
 package io.github.horaciocome1.storage.repositories
 
 import io.github.horaciocome1.storage.api.LocalCacheService
+import io.github.horaciocome1.storage.util.MyStorageCallResult
+import io.github.horaciocome1.storage.util.MyStorageRequestResult
 import io.realm.RealmModel
 
 class LocalCacheRepository(
@@ -25,9 +27,29 @@ class LocalCacheRepository(
 
     fun <T : RealmModel> setCityWeather(
         cityWeather: T
-    ) = service.setCityWeather(cityWeather)
+    ): MyStorageRequestResult<T> = try {
+        service.setCityWeather(cityWeather)
+        MyStorageRequestResult.success()
+    } catch (e: Exception) {
+        MyStorageRequestResult.error(
+            MyStorageCallResult.ERROR
+        )
+    }
 
     inline fun <reified T : RealmModel> getCityWeather(
         cityId: Int
-    ): T? = service.getCityWeather<T>(cityId)
+    ): MyStorageRequestResult<T> = try {
+        val cityWeather = service.getCityWeather<T>(cityId)
+        if (cityWeather != null) {
+            MyStorageRequestResult.success()
+        } else {
+            MyStorageRequestResult.error(
+                MyStorageCallResult.ERROR_NOT_FOUND
+            )
+        }
+    } catch (e: Exception) {
+        MyStorageRequestResult.error(
+            MyStorageCallResult.ERROR
+        )
+    }
 }

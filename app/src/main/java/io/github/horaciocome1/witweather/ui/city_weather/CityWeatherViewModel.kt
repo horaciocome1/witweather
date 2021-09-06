@@ -24,6 +24,7 @@ import io.github.horaciocome1.network.repositories.CitiesWeatherRepository
 import io.github.horaciocome1.network.util.NetworkCallResult
 import io.github.horaciocome1.storage.model.CityWeather
 import io.github.horaciocome1.storage.repositories.LocalCacheRepository
+import io.github.horaciocome1.storage.util.MyStorageCallResult
 import io.github.horaciocome1.witweather.extensions.asCityWeather
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -61,12 +62,16 @@ class CityWeatherViewModel(
         refresh: Boolean
     ) {
         var ageInMillis = ONE_HOUR_IN_MILLIS
-        val weather = localCacheRepository.getCityWeather<CityWeather>(cityId)
-            ?.also {
-                ageInMillis = Calendar.getInstance().timeInMillis - it.timeInMillis
-            }
-        if (weather != null && !refresh && ageInMillis < ONE_HOUR_IN_MILLIS) {
-            cityWeather.value = weather
+        val result = localCacheRepository.getCityWeather<CityWeather>(cityId)
+        result.data?.also {
+            ageInMillis = Calendar.getInstance().timeInMillis - it.timeInMillis
+        }
+        if (result.callResult == MyStorageCallResult.SUCCESS &&
+            result.data != null &&
+            !refresh &&
+            ageInMillis < ONE_HOUR_IN_MILLIS
+        ) {
+            cityWeather.value = result.data!!
             _callResult.value = NetworkCallResult.SUCCESS_LOCAL
         } else {
             viewModelScope.launch {
