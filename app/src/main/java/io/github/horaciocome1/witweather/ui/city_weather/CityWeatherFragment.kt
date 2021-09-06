@@ -52,8 +52,8 @@ class CityWeatherFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         binding.container.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.contentInclude.refreshButton.setOnClickListener { viewModel.refreshWeather() }

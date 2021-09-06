@@ -73,8 +73,8 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         snackbarLoading.show()
         binding.container.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding.currentCityRequestInclude.enableMyLocationButton.setOnClickListener { enableLocation() }
