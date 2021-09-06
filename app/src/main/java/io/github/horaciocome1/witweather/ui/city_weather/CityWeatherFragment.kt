@@ -18,7 +18,6 @@ package io.github.horaciocome1.witweather.ui.city_weather
 
 import android.animation.LayoutTransition
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,8 +52,8 @@ class CityWeatherFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.container.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.contentInclude.refreshButton.setOnClickListener { viewModel.refreshWeather() }
@@ -70,9 +69,8 @@ class CityWeatherFragment : Fragment() {
     }
 
     private fun getCityWeather(cityId: Int) {
-        Log.d("Fragment", "getCityWeather: $cityId")
         viewModel.getCityWeather(cityId).observe(viewLifecycleOwner) { bindWeather(it) }
-        viewModel.callResultMy.observe(viewLifecycleOwner) {}
+        viewModel.callResult.observe(viewLifecycleOwner) {}
     }
 
     private fun bindWeather(cityWeather: CityWeather) {
